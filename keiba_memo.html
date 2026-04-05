@@ -5,45 +5,46 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#0a0a0f">
+<meta name="theme-color" content="#ffffff">
 <title>競馬メモ</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap');
 :root{
-  --bg:#0a0a0f;--bg2:#13131a;--bg3:#1c1c26;--bg4:#22222f;
-  --border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.16);
-  --text:#f0f0f5;--text2:#8888a0;--text3:#55556a;
-  --accent:#c9a84c;--accent2:#e8c97a;
-  --live:#e05050;--live-bg:rgba(224,80,80,0.13);
-  --upcoming:#4a9eff;--upcoming-bg:rgba(74,158,255,0.11);
-  --green:#4cc980;
+  --bg:#f5f5f7;--bg2:#ffffff;--bg3:#f0f0f2;--bg4:#e8e8ec;
+  --border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.14);
+  --text:#1a1a2e;--text2:#666680;--text3:#aaaabc;
+  --accent:#b8943a;--accent2:#d4aa50;
+  --live:#cc3333;--live-bg:rgba(204,51,51,0.08);
+  --upcoming:#1a6abf;--upcoming-bg:rgba(26,106,191,0.08);
+  --green:#1a8a4a;
   --radius:14px;--radius-sm:8px;--radius-xs:6px;
+  --shadow:0 1px 4px rgba(0,0,0,0.08);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overscroll-behavior:none;}
 
-.app-header{position:sticky;top:0;z-index:200;background:rgba(10,10,15,0.95);backdrop-filter:blur(16px);border-bottom:0.5px solid var(--border);padding:12px 16px;display:flex;align-items:center;gap:10px;}
+.app-header{position:sticky;top:0;z-index:200;background:rgba(255,255,255,0.95);backdrop-filter:blur(16px);border-bottom:0.5px solid var(--border2);padding:12px 16px;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow);}
 .logo{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;color:var(--accent);letter-spacing:0.1em;}
 .header-tabs{display:flex;gap:4px;margin-left:auto;}
 .htab{padding:6px 10px;border-radius:20px;border:0.5px solid var(--border2);background:none;color:var(--text2);font-size:12px;font-family:'Noto Sans JP',sans-serif;cursor:pointer;white-space:nowrap;}
-.htab.active{background:var(--accent);color:#0a0a0f;border-color:var(--accent);font-weight:700;}
+.htab.active{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700;}
 
 .main{padding:14px;padding-bottom:120px;}
 .page{display:none;}.page.active{display:block;}
 
-.csv-toggle{width:100%;padding:12px 16px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);color:var(--accent);font-size:14px;font-family:'Noto Sans JP',sans-serif;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:8px;margin-bottom:12px;}
+.csv-toggle{width:100%;padding:12px 16px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);color:var(--accent);font-size:14px;font-family:'Noto Sans JP',sans-serif;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:8px;margin-bottom:12px;box-shadow:var(--shadow);}
 .csv-toggle .arr{margin-left:auto;font-size:11px;color:var(--text3);transition:transform 0.2s;}
 .csv-toggle.open .arr{transform:rotate(180deg);}
-.csv-panel{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:14px;display:none;}
-.csv-panel.open{display:block;}
+.csv-panel{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:14px;box-shadow:var(--shadow);}
+.csv-panel.hidden{display:none;}
 .csv-panel label{font-size:12px;color:var(--text2);display:block;margin-bottom:5px;}
-.csv-panel code{font-family:'DM Mono',monospace;font-size:11px;background:var(--bg3);border-radius:var(--radius-sm);padding:8px 10px;display:block;margin-bottom:10px;color:var(--accent2);white-space:pre;overflow-x:auto;line-height:1.6;}
+.csv-panel code{font-family:'DM Mono',monospace;font-size:11px;background:var(--bg3);border-radius:var(--radius-sm);padding:8px 10px;display:block;margin-bottom:10px;color:#333;white-space:pre;overflow-x:auto;line-height:1.6;}
 .csv-panel textarea{width:100%;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--radius-sm);padding:9px 11px;font-size:12px;font-family:'DM Mono',monospace;color:var(--text);resize:vertical;min-height:80px;outline:none;}
 .csv-panel textarea:focus{border-color:var(--accent);}
 .btn-row{display:flex;gap:8px;margin-top:9px;align-items:center;flex-wrap:wrap;}
 .btn{padding:9px 16px;border-radius:var(--radius-sm);border:0.5px solid var(--border2);background:var(--bg3);color:var(--text);font-size:13px;font-family:'Noto Sans JP',sans-serif;cursor:pointer;}
 .btn:active{opacity:0.7;}
-.btn-accent{background:var(--accent);color:#0a0a0f;font-weight:700;border-color:var(--accent);}
+.btn-accent{background:var(--accent);color:#fff;font-weight:700;border-color:var(--accent);}
 .btn-danger{color:var(--live);border-color:var(--live);}
 .file-lbl{padding:9px 16px;border-radius:var(--radius-sm);border:0.5px solid var(--border2);background:var(--bg3);color:var(--text);font-size:13px;cursor:pointer;display:inline-block;}
 .msg-ok{font-size:12px;color:var(--green);}
@@ -52,10 +53,10 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
 .venue-tabs-wrap{margin-bottom:14px;overflow-x:auto;scrollbar-width:none;}
 .venue-tabs-wrap::-webkit-scrollbar{display:none;}
 .venue-tabs{display:flex;gap:6px;min-width:max-content;}
-.vtab{padding:8px 14px;border-radius:22px;border:0.5px solid var(--border2);background:var(--bg2);color:var(--text2);font-size:13px;font-family:'Noto Sans JP',sans-serif;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:5px;}
-.vtab.active{border-color:var(--accent);color:var(--accent);font-weight:700;}
+.vtab{padding:8px 14px;border-radius:22px;border:0.5px solid var(--border2);background:var(--bg2);color:var(--text2);font-size:13px;font-family:'Noto Sans JP',sans-serif;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:5px;box-shadow:var(--shadow);}
+.vtab.active{border-color:var(--accent);color:var(--accent);font-weight:700;background:#fff;}
 .vtab .vcnt{font-size:10px;font-family:'DM Mono',monospace;background:var(--bg3);padding:1px 5px;border-radius:7px;color:var(--text3);}
-.vtab.active .vcnt{background:rgba(201,168,76,0.2);color:var(--accent);}
+.vtab.active .vcnt{background:rgba(184,148,58,0.15);color:var(--accent);}
 .venue-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 
 .venue-section{margin-bottom:18px;}
@@ -66,8 +67,8 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
 .v-live{font-size:11px;color:var(--live);background:var(--live-bg);padding:2px 8px;border-radius:8px;}
 
 .race-list{display:flex;flex-direction:column;gap:8px;}
-.race-card{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);overflow:hidden;}
-.race-card.expanded{border-color:rgba(201,168,76,0.3);}
+.race-card{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
+.race-card.expanded{border-color:rgba(184,148,58,0.4);}
 .race-header{padding:13px 15px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;}
 .race-header:active{background:var(--bg3);}
 .race-num{font-family:'DM Mono',monospace;font-size:12px;color:var(--text3);flex-shrink:0;width:26px;}
@@ -87,24 +88,31 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
 .horse-list{display:none;border-top:0.5px solid var(--border);}
 .race-card.expanded .horse-list{display:block;}
 
-.horse-card{border-bottom:0.5px solid var(--border);overflow:hidden;}
+/* 馬カード */
+.horse-card{border-bottom:0.5px solid var(--border);overflow:hidden;transition:opacity 0.2s,background 0.2s;}
 .horse-card:last-child{border-bottom:none;}
-.horse-card.has-history{background:rgba(201,168,76,0.035);}
+.horse-card.has-history{background:rgba(184,148,58,0.04);}
+/* 消し馬グレー表示 */
+.horse-card.crossed-out{opacity:0.45;background:#f8f8f8;}
+.horse-card.crossed-out .horse-name{color:var(--text3);text-decoration:line-through;}
+
 .horse-main{padding:11px 13px;display:flex;align-items:center;gap:9px;}
 .waku-badge{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:13px;font-weight:700;flex-shrink:0;position:relative;}
 .history-star{position:absolute;top:-5px;right:-5px;font-size:10px;line-height:1;}
+
 .current-mark{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;font-size:16px;font-weight:900;cursor:pointer;border:2px solid transparent;font-family:'Noto Sans JP',sans-serif;flex-shrink:0;transition:transform 0.1s;}
 .current-mark:active{transform:scale(0.88);}
-.current-mark[data-m="◎"]{color:#e8c97a;border-color:#e8c97a;background:rgba(232,201,122,0.15);}
-.current-mark[data-m="○"]{color:#4a9eff;border-color:#4a9eff;background:rgba(74,158,255,0.15);}
-.current-mark[data-m="▲"]{color:#e05050;border-color:#e05050;background:rgba(224,80,80,0.15);}
-.current-mark[data-m="△"]{color:#4cc980;border-color:#4cc980;background:rgba(76,201,128,0.15);}
-.current-mark[data-m="×"]{color:#8888a0;border-color:#8888a0;background:rgba(136,136,160,0.15);}
-.current-mark[data-m="―"]{color:#55556a;border-color:transparent;background:var(--bg3);}
+.current-mark[data-m="◎"]{color:#b8600a;border-color:#b8600a;background:rgba(184,96,10,0.1);}
+.current-mark[data-m="○"]{color:#1a5abf;border-color:#1a5abf;background:rgba(26,90,191,0.1);}
+.current-mark[data-m="▲"]{color:#cc3333;border-color:#cc3333;background:rgba(204,51,51,0.1);}
+.current-mark[data-m="△"]{color:#1a8a4a;border-color:#1a8a4a;background:rgba(26,138,74,0.1);}
+.current-mark[data-m="×"]{color:#999;border-color:#ccc;background:rgba(0,0,0,0.05);}
+.current-mark[data-m="―"]{color:#ccc;border-color:transparent;background:var(--bg3);}
+
 .horse-info{flex:1;min-width:0;}
 .horse-name-row{display:flex;align-items:center;gap:5px;flex-wrap:wrap;}
 .horse-name{font-size:14px;font-weight:700;color:var(--text);}
-.history-badge{font-size:10px;background:rgba(201,168,76,0.15);color:var(--accent);padding:2px 6px;border-radius:7px;font-family:'DM Mono',monospace;white-space:nowrap;}
+.history-badge{font-size:10px;background:rgba(184,148,58,0.12);color:var(--accent);padding:2px 6px;border-radius:7px;font-family:'DM Mono',monospace;white-space:nowrap;}
 .horse-sub{font-size:12px;color:var(--text2);margin-top:2px;display:flex;gap:8px;}
 .odds{font-family:'DM Mono',monospace;color:var(--accent);}
 .memo-prev{font-size:11px;color:var(--text3);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px;}
@@ -116,35 +124,34 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
 .memo-area.open{display:block;}
 .history-block{margin-bottom:9px;}
 .history-title{font-size:11px;color:var(--text3);margin-bottom:5px;}
-.history-entry{background:var(--bg4);border-radius:var(--radius-xs);padding:7px 9px;margin-bottom:4px;}
+.history-entry{background:var(--bg2);border-radius:var(--radius-xs);padding:7px 9px;margin-bottom:4px;border:0.5px solid var(--border);}
 .h-date{font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);margin-bottom:2px;}
 .h-text{font-size:12px;color:var(--text);line-height:1.5;}
 .phrase-btns{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px;}
-.phrase-btn{padding:5px 11px;border-radius:12px;border:0.5px solid var(--border2);background:var(--bg4);color:var(--text2);font-size:12px;font-family:'Noto Sans JP',sans-serif;cursor:pointer;}
+.phrase-btn{padding:5px 11px;border-radius:12px;border:0.5px solid var(--border2);background:var(--bg2);color:var(--text2);font-size:12px;font-family:'Noto Sans JP',sans-serif;cursor:pointer;}
 .phrase-btn:active{color:var(--accent);}
 .memo-area textarea{width:100%;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius-sm);padding:9px 11px;font-size:14px;font-family:'Noto Sans JP',sans-serif;color:var(--text);resize:none;min-height:72px;outline:none;line-height:1.6;}
 .memo-area textarea:focus{border-color:var(--accent);}
 .memo-actions{display:flex;align-items:center;gap:8px;margin-top:7px;}
-.save-btn{padding:8px 20px;background:var(--accent);color:#0a0a0f;border:none;border-radius:var(--radius-sm);font-size:13px;font-family:'Noto Sans JP',sans-serif;font-weight:700;cursor:pointer;}
+.save-btn{padding:8px 20px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);font-size:13px;font-family:'Noto Sans JP',sans-serif;font-weight:700;cursor:pointer;}
 .save-btn:active{background:var(--accent2);}
 .saved-msg{font-size:11px;color:var(--green);opacity:0;transition:opacity 0.3s;font-family:'DM Mono',monospace;}
 .saved-msg.show{opacity:1;}
 
-.mark-legend{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;}
+.mark-legend{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;box-shadow:var(--shadow);}
 .ml-item{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--text2);}
 .ml-sym{font-size:15px;font-weight:900;}
 
-/* ===== メモ履歴 ===== */
+/* メモ履歴 */
 .log-filter-tabs{display:flex;gap:6px;margin-bottom:14px;overflow-x:auto;scrollbar-width:none;}
 .log-filter-tabs::-webkit-scrollbar{display:none;}
-.lftab{padding:7px 14px;border-radius:20px;border:0.5px solid var(--border2);background:var(--bg2);color:var(--text2);font-size:13px;font-family:'Noto Sans JP',sans-serif;cursor:pointer;white-space:nowrap;flex-shrink:0;}
-.lftab.active{background:var(--accent);color:#0a0a0f;border-color:var(--accent);font-weight:700;}
+.lftab{padding:7px 14px;border-radius:20px;border:0.5px solid var(--border2);background:var(--bg2);color:var(--text2);font-size:13px;font-family:'Noto Sans JP',sans-serif;cursor:pointer;white-space:nowrap;flex-shrink:0;box-shadow:var(--shadow);}
+.lftab.active{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700;}
 
 .search-bar{margin-bottom:12px;}
-.search-bar input{width:100%;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;font-size:14px;font-family:'Noto Sans JP',sans-serif;color:var(--text);outline:none;}
+.search-bar input{width:100%;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;font-size:14px;font-family:'Noto Sans JP',sans-serif;color:var(--text);outline:none;box-shadow:var(--shadow);}
 .search-bar input:focus{border-color:var(--accent);}
 
-/* 日付グループ */
 .date-group{margin-bottom:18px;}
 .date-heading{display:flex;align-items:center;gap:10px;margin-bottom:8px;padding:0 2px;}
 .date-label{font-size:13px;font-weight:700;color:var(--accent);font-family:'DM Mono',monospace;}
@@ -152,8 +159,8 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
 .date-line{flex:1;height:0.5px;background:var(--border2);}
 
 .memo-log-list{display:flex;flex-direction:column;gap:8px;}
-.memo-log-card{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);overflow:hidden;}
-.memo-log-header{padding:10px 14px;border-bottom:0.5px solid var(--border);display:flex;align-items:center;gap:8px;}
+.memo-log-card{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
+.memo-log-header{padding:10px 14px;border-bottom:0.5px solid var(--border);display:flex;align-items:center;gap:8px;background:var(--bg3);}
 .mlh-mark{font-size:16px;font-weight:900;}
 .mlh-name{font-size:14px;font-weight:700;color:var(--text);flex:1;}
 .mlh-cnt{font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;}
@@ -163,7 +170,7 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
 .mle-mark{font-size:14px;font-weight:900;}
 .mle-text{font-size:13px;color:var(--text);line-height:1.6;}
 
-.settings-section{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:14px;}
+.settings-section{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow);}
 .section-title{font-size:13px;font-weight:500;color:var(--text2);margin-bottom:10px;}
 .phrase-list{display:flex;flex-direction:column;gap:6px;margin-bottom:10px;}
 .phrase-item{display:flex;gap:6px;align-items:center;}
@@ -175,20 +182,20 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
 .empty .e-icon{font-size:44px;margin-bottom:10px;}
 .empty p{font-size:14px;line-height:1.8;}
 
-#popOverlay{display:none;position:fixed;inset:0;z-index:499;}
+#popOverlay{display:none;position:fixed;inset:0;z-index:499;background:rgba(0,0,0,0.2);}
 #popOverlay.open{display:block;}
-.mark-popup{display:none;position:fixed;z-index:500;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);padding:12px 14px;box-shadow:0 8px 32px rgba(0,0,0,0.7);}
+.mark-popup{display:none;position:fixed;z-index:500;background:#fff;border:0.5px solid var(--border2);border-radius:var(--radius);padding:12px 14px;box-shadow:0 8px 32px rgba(0,0,0,0.18);}
 .mark-popup.open{display:block;}
 .mark-popup-title{font-size:12px;color:var(--text2);margin-bottom:8px;font-weight:500;}
 .mark-popup-inner{display:flex;gap:8px;align-items:center;}
 .mpbtn{width:38px;height:38px;border-radius:50%;border:2px solid transparent;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:900;cursor:pointer;background:var(--bg3);transition:all 0.12s;font-family:'Noto Sans JP',sans-serif;}
 .mpbtn:active{transform:scale(0.88);}
-.mpbtn[data-m="◎"]{color:#e8c97a;}.mpbtn[data-m="◎"].on{background:rgba(232,201,122,0.25);border-color:#e8c97a;}
-.mpbtn[data-m="○"]{color:#4a9eff;}.mpbtn[data-m="○"].on{background:rgba(74,158,255,0.25);border-color:#4a9eff;}
-.mpbtn[data-m="▲"]{color:#e05050;}.mpbtn[data-m="▲"].on{background:rgba(224,80,80,0.25);border-color:#e05050;}
-.mpbtn[data-m="△"]{color:#4cc980;}.mpbtn[data-m="△"].on{background:rgba(76,201,128,0.25);border-color:#4cc980;}
-.mpbtn[data-m="×"]{color:#8888a0;}.mpbtn[data-m="×"].on{background:rgba(136,136,160,0.25);border-color:#8888a0;}
-.mpbtn[data-m="―"]{color:#55556a;font-size:14px;}.mpbtn[data-m="―"].on{background:rgba(85,85,106,0.25);border-color:#55556a;}
+.mpbtn[data-m="◎"]{color:#b8600a;}.mpbtn[data-m="◎"].on{background:rgba(184,96,10,0.12);border-color:#b8600a;}
+.mpbtn[data-m="○"]{color:#1a5abf;}.mpbtn[data-m="○"].on{background:rgba(26,90,191,0.12);border-color:#1a5abf;}
+.mpbtn[data-m="▲"]{color:#cc3333;}.mpbtn[data-m="▲"].on{background:rgba(204,51,51,0.12);border-color:#cc3333;}
+.mpbtn[data-m="△"]{color:#1a8a4a;}.mpbtn[data-m="△"].on{background:rgba(26,138,74,0.12);border-color:#1a8a4a;}
+.mpbtn[data-m="×"]{color:#999;}.mpbtn[data-m="×"].on{background:rgba(0,0,0,0.08);border-color:#ccc;}
+.mpbtn[data-m="―"]{color:#bbb;font-size:14px;}.mpbtn[data-m="―"].on{background:rgba(0,0,0,0.06);border-color:#ccc;}
 </style>
 </head>
 <body>
@@ -211,12 +218,11 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
 
 <div class="main">
 
-  <!-- 出馬表 -->
   <div id="page-races" class="page active">
     <button class="csv-toggle" id="csvToggle" onclick="toggleCsv()">
       <span>＋ CSVを追加・更新</span><span class="arr">▾</span>
     </button>
-    <div class="csv-panel" id="csvPanel">
+    <div class="csv-panel hidden" id="csvPanel">
       <label>CSVフォーマット</label>
       <code>競馬場,レース名,コース,時刻,ステータス,馬番,馬名,騎手,オッズ
 阪神,阪神11R,芝2000m,15:40,live,1,馬名A,騎手A,2.3</code>
@@ -229,11 +235,11 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
       </div>
     </div>
     <div class="mark-legend">
-      <span class="ml-item"><span class="ml-sym" style="color:#e8c97a">◎</span>本命</span>
-      <span class="ml-item"><span class="ml-sym" style="color:#4a9eff">○</span>対抗</span>
-      <span class="ml-item"><span class="ml-sym" style="color:#e05050">▲</span>単穴</span>
-      <span class="ml-item"><span class="ml-sym" style="color:#4cc980">△</span>連下</span>
-      <span class="ml-item"><span class="ml-sym" style="color:#8888a0">×</span>消し</span>
+      <span class="ml-item"><span class="ml-sym" style="color:#b8600a">◎</span>本命</span>
+      <span class="ml-item"><span class="ml-sym" style="color:#1a5abf">○</span>対抗</span>
+      <span class="ml-item"><span class="ml-sym" style="color:#cc3333">▲</span>単穴</span>
+      <span class="ml-item"><span class="ml-sym" style="color:#1a8a4a">△</span>連下</span>
+      <span class="ml-item"><span class="ml-sym" style="color:#999">×</span>消し</span>
     </div>
     <div id="venueTabs" class="venue-tabs-wrap" style="display:none">
       <div class="venue-tabs" id="venueTabsInner"></div>
@@ -241,17 +247,14 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
     <div id="raceContent"></div>
   </div>
 
-  <!-- メモ履歴 -->
   <div id="page-memolog" class="page">
     <div class="search-bar">
       <input type="text" id="memoSearch" placeholder="馬名で検索..." oninput="renderMemoLog()">
     </div>
-    <!-- 絞り込みタブ：馬名別・日付別 -->
     <div class="log-filter-tabs" id="logFilterTabs"></div>
     <div id="memoLogList" class="memo-log-list"></div>
   </div>
 
-  <!-- 設定 -->
   <div id="page-settings" class="page">
     <div class="settings-section">
       <div class="section-title">📝 定型文（ワンタッチメモ）</div>
@@ -262,7 +265,7 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
     </div>
     <div class="settings-section">
       <div class="section-title">🗑 データ管理</div>
-      <button class="btn" onclick="clearAll()" style="width:100%;color:var(--live);border-color:var(--live);">全メモ・印をリセット</button>
+      <button class="btn btn-danger" onclick="clearAll()" style="width:100%;">全メモ・印をリセット</button>
     </div>
   </div>
 
@@ -270,41 +273,27 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
 
 <script>
 const MARKS=['◎','○','▲','△','×'];
-const MC={'◎':'#e8c97a','○':'#4a9eff','▲':'#e05050','△':'#4cc980','×':'#8888a0','―':'#55556a'};
+const MC={'◎':'#b8600a','○':'#1a5abf','▲':'#cc3333','△':'#1a8a4a','×':'#999','―':'#ccc'};
 const WC=[null,
-  {bg:'#f5f5f5',fg:'#222',border:'#bbb'},{bg:'#222',fg:'#fff',border:'#444'},
-  {bg:'#cc3333',fg:'#fff',border:'#aa2222'},{bg:'#2255cc',fg:'#fff',border:'#1a44aa'},
-  {bg:'#f0c020',fg:'#333',border:'#c9a010'},{bg:'#228833',fg:'#fff',border:'#1a6628'},
-  {bg:'#ee6600',fg:'#fff',border:'#cc5500'},{bg:'#dd1177',fg:'#fff',border:'#bb0055'},
+  {bg:'#f5f5f5',fg:'#222',border:'#ccc'},
+  {bg:'#333',fg:'#fff',border:'#555'},
+  {bg:'#cc3333',fg:'#fff',border:'#aa2222'},
+  {bg:'#2255cc',fg:'#fff',border:'#1a44aa'},
+  {bg:'#e8b800',fg:'#333',border:'#c9a000'},
+  {bg:'#228833',fg:'#fff',border:'#1a6628'},
+  {bg:'#ee6600',fg:'#fff',border:'#cc5500'},
+  {bg:'#cc1166',fg:'#fff',border:'#aa0044'},
 ];
-const WCX=[{bg:'#4a3a1a',fg:'#e8c97a',border:'#6a5a2a'},{bg:'#1a3050',fg:'#5a9aee',border:'#2a4060'}];
+const WCX=[{bg:'#7a6030',fg:'#fff',border:'#5a4820'},{bg:'#1a3060',fg:'#fff',border:'#0a2040'}];
 function waku(n){const w=Math.ceil(n/2);return(w>=1&&w<=8)?WC[w]:WCX[(n-17)%WCX.length]||WCX[0];}
-const VC=['#4a9eff','#e05050','#4cc980','#c9a84c','#b07aff','#ff7ac9','#7ae8e8','#ff9a4a'];
+const VC=['#1a6abf','#cc3333','#1a8a4a','#b8943a','#6644cc','#cc4488','#1a9aaa','#cc6600'];
 function vcol(i){return VC[i%VC.length];}
 const VK=['東京','中山','阪神','京都','中京','小倉','福島','新潟','函館','札幌'];
 function gv(n){for(const v of VK)if(n.includes(v))return v;return'その他';}
 
+// メモ開閉状態を別管理（レンダリングに影響されない）
+let memoOpen={};
 let races=[],memos={},marks={},expanded={},phrases=[],currentVenue='ALL',logMode='horse';
-
-function load(){
-  try{const s=localStorage.getItem('km7_races');if(s)races=JSON.parse(s);}catch(e){}
-  try{const s=localStorage.getItem('km7_memos');if(s)memos=JSON.parse(s);}catch(e){}
-  try{const s=localStorage.getItem('km7_marks');if(s)marks=JSON.parse(s);}catch(e){}
-  try{const s=localStorage.getItem('km7_phrases');if(s)phrases=JSON.parse(s);}catch(e){}
-  if(!phrases.length)phrases=['好調','前走好内容','距離○','要注意','消し','本命'];
-  if(!races.length){
-    const r=parseCsv(BUILTIN_CSV);
-    if(r.races)races=r.races;
-  }
-}
-function save(){
-  try{
-    localStorage.setItem('km7_races',JSON.stringify(races));
-    localStorage.setItem('km7_memos',JSON.stringify(memos));
-    localStorage.setItem('km7_marks',JSON.stringify(marks));
-    localStorage.setItem('km7_phrases',JSON.stringify(phrases));
-  }catch(e){}
-}
 
 const BUILTIN_CSV=`競馬場,レース名,コース,時刻,ステータス,馬番,馬名,騎手,オッズ
 阪神,阪神11R 大阪杯,芝2000m,15:40,upcoming,1,サンストックトン,高杉吏麒,
@@ -323,6 +312,22 @@ const BUILTIN_CSV=`競馬場,レース名,コース,時刻,ステータス,馬�
 阪神,阪神11R 大阪杯,芝2000m,15:40,upcoming,14,タガノデュード,古川吉洋,
 阪神,阪神11R 大阪杯,芝2000m,15:40,upcoming,15,クロワデュノール,北村友一,`;
 
+function load(){
+  try{const s=localStorage.getItem('km8_races');if(s)races=JSON.parse(s);}catch(e){}
+  try{const s=localStorage.getItem('km8_memos');if(s)memos=JSON.parse(s);}catch(e){}
+  try{const s=localStorage.getItem('km8_marks');if(s)marks=JSON.parse(s);}catch(e){}
+  try{const s=localStorage.getItem('km8_phrases');if(s)phrases=JSON.parse(s);}catch(e){}
+  if(!phrases.length)phrases=['好調','前走好内容','距離○','要注意','消し','本命'];
+  if(!races.length){const r=parseCsv(BUILTIN_CSV);if(r.races)races=r.races;}
+}
+function save(){
+  try{
+    localStorage.setItem('km8_races',JSON.stringify(races));
+    localStorage.setItem('km8_memos',JSON.stringify(memos));
+    localStorage.setItem('km8_marks',JSON.stringify(marks));
+    localStorage.setItem('km8_phrases',JSON.stringify(phrases));
+  }catch(e){}
+}
 load();
 
 function showPage(n,el){
@@ -368,11 +373,8 @@ function importCsv(){
   if(!text.trim()){msg.className='msg-err';msg.textContent='テキストを入力してください';return;}
   const r=parseCsv(text);
   if(r.error){msg.className='msg-err';msg.textContent=r.error;return;}
-  r.races.forEach(nr=>{
-    const exists=races.find(er=>er.name===nr.name);
-    if(!exists)races.push(nr);else Object.assign(exists,nr);
-  });
-  expanded={};currentVenue='ALL';save();renderAll();
+  r.races.forEach(nr=>{const ex=races.find(er=>er.name===nr.name);if(!ex)races.push(nr);else Object.assign(ex,nr);});
+  expanded={};memoOpen={};currentVenue='ALL';save();renderAll();
   msg.className='msg-ok';msg.textContent=`${r.races.length}レース 追加しました ✓`;
 }
 function replaceWithCsv(){
@@ -381,9 +383,9 @@ function replaceWithCsv(){
   if(!text.trim()){msg.className='msg-err';msg.textContent='テキストを入力してください';return;}
   const r=parseCsv(text);
   if(r.error){msg.className='msg-err';msg.textContent=r.error;return;}
-  races=r.races;expanded={};currentVenue='ALL';
+  races=r.races;expanded={};memoOpen={};currentVenue='ALL';
   save();renderAll();
-  document.getElementById('csvPanel').classList.remove('open');
+  document.getElementById('csvPanel').classList.add('hidden');
   document.getElementById('csvToggle').classList.remove('open');
   msg.className='msg-ok';msg.textContent=`${r.races.length}レース 入れ替えました ✓`;
 }
@@ -393,17 +395,14 @@ function loadFile(e){
   reader.onload=ev=>{
     const r=parseCsv(ev.target.result);
     if(r.error){alert(r.error);return;}
-    r.races.forEach(nr=>{
-      const exists=races.find(er=>er.name===nr.name);
-      if(!exists)races.push(nr);else Object.assign(exists,nr);
-    });
-    expanded={};currentVenue='ALL';save();renderAll();
+    r.races.forEach(nr=>{const ex=races.find(er=>er.name===nr.name);if(!ex)races.push(nr);else Object.assign(ex,nr);});
+    expanded={};memoOpen={};currentVenue='ALL';save();renderAll();
     alert(`${r.races.length}レース 追加しました！`);
   };
   reader.readAsText(file,'UTF-8');
 }
 function toggleCsv(){
-  document.getElementById('csvPanel').classList.toggle('open');
+  document.getElementById('csvPanel').classList.toggle('hidden');
   document.getElementById('csvToggle').classList.toggle('open');
 }
 
@@ -430,7 +429,7 @@ function closeMarkPopup(){
 }
 function setMark(key,m){
   if(m==='―')delete marks[key];else marks[key]=m;
-  save();closeMarkPopup();renderAll();
+  save();closeMarkPopup();renderRaceContent();
 }
 
 function getVenues(){const s=[];races.forEach(r=>{if(!s.includes(r.venue))s.push(r.venue);});return s;}
@@ -444,7 +443,7 @@ function renderVenueTabs(){
   if(venues.length<=1){wrap.style.display='none';return;}
   wrap.style.display='block';
   let html=`<button class="vtab ${currentVenue==='ALL'?'active':''}" onclick="selectVenue('ALL')">
-    <span class="venue-dot" style="background:${currentVenue==='ALL'?'var(--accent)':'var(--text3)'}"></span>
+    <span class="venue-dot" style="background:${currentVenue==='ALL'?'var(--accent)':'#ccc'}"></span>
     すべて<span class="vcnt">${races.length}</span></button>`;
   venues.forEach((v,i)=>{
     const cnt=races.filter(r=>r.venue===v).length;
@@ -471,7 +470,7 @@ function renderRaceContent(){
       const bt=r.status==='live'?'● LIVE':'▲ 予定';
       const memoC=r.horses.filter(h=>getCurMemo(r.id,h.num)).length;
       const histC=r.horses.filter(h=>getHistory(h.name).length>0).length;
-      const markedH=r.horses.filter(h=>getMark(r.id,h.num)!=='―');
+      const markedH=r.horses.filter(h=>getMark(r.id,h.num)!=='―'&&getMark(r.id,h.num)!=='×');
       const marksSumHtml=markedH.length?`<div class="marks-summary">`+markedH.map(h=>{const m=getMark(r.id,h.num);return`<span class="ms-chip" style="color:${MC[m]}">${m}${h.num}</span>`;}).join('')+`</div>`:'';
       const horsesHtml=r.horses.map(h=>{
         const key=r.id+'_'+h.num;
@@ -480,10 +479,13 @@ function renderRaceContent(){
         const hasHist=hist.length>0;
         const wc=waku(h.num);
         const mk=getMark(r.id,h.num);
+        const isCrossed=mk==='×';
+        // メモエリアの開閉は memoOpen で管理（保存済みでも自動展開しない）
+        const isOpen=!!memoOpen[key];
         const histH=hasHist?`<div class="history-block"><div class="history-title">⏱ 過去のメモ（${hist.length}件）</div>${hist.slice(-3).reverse().map(e=>`<div class="history-entry"><div class="h-date">${e.raceName||''} ${e.date||''}</div><div class="h-text">${e.text}</div></div>`).join('')}</div>`:'';
         const phraseH=phrases.filter(p=>p.trim()).map(p=>`<button class="phrase-btn" onclick="insertPhrase('${key}','${p.replace(/'/g,"\\'")}')">＋${p}</button>`).join('');
         return `
-          <div class="horse-card ${hasHist?'has-history':''}" id="card_${key}">
+          <div class="horse-card ${hasHist?'has-history':''} ${isCrossed?'crossed-out':''}" id="card_${key}">
             <div class="horse-main">
               <div class="waku-badge" style="background:${wc.bg};color:${wc.fg};border:2px solid ${wc.border}">
                 ${h.num}${hasHist?'<span class="history-star">⭐</span>':''}
@@ -502,7 +504,7 @@ function renderRaceContent(){
               </div>
               <button class="memo-btn ${cm?'has-memo':''}" onclick="event.stopPropagation();toggleMemo('${key}')">${cm?'✏️メモ':'メモ＋'}</button>
             </div>
-            <div class="memo-area ${cm?'open':''}" id="memo_${key}">
+            <div class="memo-area ${isOpen?'open':''}" id="memo_${key}">
               ${histH}
               ${phraseH?`<div class="phrase-btns">${phraseH}</div>`:''}
               <textarea id="ta_${key}" placeholder="この馬のメモ...">${cm}</textarea>
@@ -545,8 +547,26 @@ function renderRaceContent(){
 }
 
 function toggleRace(id){expanded[id]=!expanded[id];renderRaceContent();}
-function toggleMemo(key){document.getElementById('memo_'+key).classList.toggle('open');}
-function insertPhrase(key,text){const ta=document.getElementById('ta_'+key);if(!ta)return;ta.value=ta.value?ta.value+'　'+text:text;ta.focus();}
+
+// メモ開閉はmemoOpenで管理、DOMを直接操作してレンダリングしない
+function toggleMemo(key){
+  memoOpen[key]=!memoOpen[key];
+  const el=document.getElementById('memo_'+key);
+  if(el)el.classList.toggle('open',memoOpen[key]);
+  const btn=document.querySelector(`#card_${key} .memo-btn`);
+  if(btn){
+    const cm=getCurMemo(key.split('_')[0],key.split('_')[1]);
+    btn.textContent=cm?'✏️メモ':'メモ＋';
+  }
+}
+
+function insertPhrase(key,text){
+  const ta=document.getElementById('ta_'+key);
+  if(!ta)return;
+  ta.value=ta.value?ta.value+'　'+text:text;
+  ta.focus();
+}
+
 function saveMemo(rid,num,name,rname){
   const key=rid+'_'+num;
   const text=document.getElementById('ta_'+key)?.value||'';
@@ -558,64 +578,43 @@ function saveMemo(rid,num,name,rname){
   if(text)memos[name].push({raceId:rid,raceName:rname,date,dateKey,text,mark:marks[key]||'―'});
   memos['__c__'+key]=text;
   save();
+  // メモ欄はそのまま開いておく（閉じない）
+  const prev=document.querySelector(`#card_${key} .memo-prev`);
+  if(prev)prev.textContent=text?'📝 '+text:'';
+  const btn=document.querySelector(`#card_${key} .memo-btn`);
+  if(btn){btn.textContent=text?'✏️メモ':'メモ＋';btn.className='memo-btn'+(text?' has-memo':'');}
   const st=document.getElementById('st_'+key);
   if(st){st.classList.add('show');setTimeout(()=>st.classList.remove('show'),1500);}
-  renderRaceContent();
 }
 
 // ===== メモ履歴 =====
-function setLogMode(mode){
-  logMode=mode;
-  renderMemoLog();
+function setLogMode(mode){logMode=mode;renderMemoLog();}
+function getUniqueDates(){
+  const dates=new Set();
+  Object.entries(memos).filter(([k])=>!k.startsWith('__c__')).forEach(([k,logs])=>{
+    if(Array.isArray(logs))logs.forEach(e=>{if(e.dateKey)dates.add(e.dateKey);});
+  });
+  return[...dates].sort((a,b)=>b.localeCompare(a));
 }
-
 function renderMemoLog(){
   const q=(document.getElementById('memoSearch')?.value||'').trim();
-
-  // フィルタータブ描画
   const dates=getUniqueDates();
-  const tabsEl=document.getElementById('logFilterTabs');
-  tabsEl.innerHTML=`
+  document.getElementById('logFilterTabs').innerHTML=`
     <button class="lftab ${logMode==='horse'?'active':''}" onclick="setLogMode('horse')">🐴 馬名別</button>
     <button class="lftab ${logMode==='date'?'active':''}" onclick="setLogMode('date')">📅 日付別</button>
-    ${dates.map(d=>`<button class="lftab ${logMode===d?'active':''}" onclick="setLogMode('${d}')">${d}</button>`).join('')}
-  `;
-
+    ${dates.map(d=>`<button class="lftab ${logMode===d?'active':''}" onclick="setLogMode('${d}')">${d}</button>`).join('')}`;
   const el=document.getElementById('memoLogList');
-
-  // 全エントリー収集
   const allEntries=[];
-  Object.entries(memos)
-    .filter(([k])=>!k.startsWith('__c__'))
-    .filter(([k,v])=>Array.isArray(v)&&v.length>0)
-    .forEach(([horseName,logs])=>{
-      logs.forEach(log=>{
-        allEntries.push({horseName,...log});
-      });
-    });
-
-  if(!allEntries.length){
-    el.innerHTML=`<div class="empty"><div class="e-icon">📝</div><p>まだメモがありません</p></div>`;
-    return;
-  }
-
-  // 検索フィルター
+  Object.entries(memos).filter(([k])=>!k.startsWith('__c__')).filter(([k,v])=>Array.isArray(v)&&v.length>0)
+    .forEach(([horseName,logs])=>logs.forEach(log=>allEntries.push({horseName,...log})));
+  if(!allEntries.length){el.innerHTML=`<div class="empty"><div class="e-icon">📝</div><p>まだメモがありません</p></div>`;return;}
   const filtered=allEntries.filter(e=>!q||e.horseName.includes(q)||e.raceName?.includes(q));
-  if(!filtered.length){
-    el.innerHTML=`<div class="empty"><div class="e-icon">🔍</div><p>該当するメモがありません</p></div>`;
-    return;
-  }
-
+  if(!filtered.length){el.innerHTML=`<div class="empty"><div class="e-icon">🔍</div><p>該当するメモがありません</p></div>`;return;}
   if(logMode==='horse'){
-    // 馬名別グループ
     const byHorse={};
-    filtered.forEach(e=>{
-      if(!byHorse[e.horseName])byHorse[e.horseName]=[];
-      byHorse[e.horseName].push(e);
-    });
+    filtered.forEach(e=>{if(!byHorse[e.horseName])byHorse[e.horseName]=[];byHorse[e.horseName].push(e);});
     el.innerHTML=Object.entries(byHorse).map(([name,logs])=>{
-      const last=logs[logs.length-1];
-      const mk=last?.mark||'―';
+      const mk=logs[logs.length-1]?.mark||'―';
       return`<div class="memo-log-card">
         <div class="memo-log-header">
           ${mk!=='―'?`<span class="mlh-mark" style="color:${MC[mk]}">${mk}</span>`:''}
@@ -633,83 +632,42 @@ function renderMemoLog(){
         </div>
       </div>`;
     }).join('');
-
-  } else {
-    // 日付別グループ（特定日またはすべて）
+  }else{
     const target=logMode==='date'?null:logMode;
     const byDate={};
-    filtered
-      .filter(e=>!target||e.dateKey===target)
-      .forEach(e=>{
-        const dk=e.dateKey||e.date||'不明';
-        if(!byDate[dk])byDate[dk]=[];
-        byDate[dk].push(e);
-      });
-
+    filtered.filter(e=>!target||e.dateKey===target).forEach(e=>{
+      const dk=e.dateKey||e.date||'不明';
+      if(!byDate[dk])byDate[dk]=[];byDate[dk].push(e);
+    });
     const sortedDates=Object.keys(byDate).sort((a,b)=>b.localeCompare(a));
-    if(!sortedDates.length){
-      el.innerHTML=`<div class="empty"><div class="e-icon">📅</div><p>この日付のメモはありません</p></div>`;
-      return;
-    }
+    if(!sortedDates.length){el.innerHTML=`<div class="empty"><div class="e-icon">📅</div><p>この日付のメモはありません</p></div>`;return;}
     el.innerHTML=sortedDates.map(dk=>{
       const entries=byDate[dk];
-      const cards=entries.map(e=>`
-        <div class="memo-log-card">
-          <div class="memo-log-header">
-            ${e.mark&&e.mark!=='―'?`<span class="mlh-mark" style="color:${MC[e.mark]}">${e.mark}</span>`:''}
-            <span class="mlh-name">${e.horseName}</span>
-            <span class="mlh-cnt">${e.raceName||''}</span>
-          </div>
-          <div class="memo-log-entries">
-            <div class="mle">
-              <div class="mle-text">${e.text}</div>
+      return`<div class="date-group">
+        <div class="date-heading">
+          <span class="date-label">${dk}</span>
+          <span class="date-count">${entries.length}件</span>
+          <span class="date-line"></span>
+        </div>
+        <div class="memo-log-list">${entries.map(e=>`
+          <div class="memo-log-card">
+            <div class="memo-log-header">
+              ${e.mark&&e.mark!=='―'?`<span class="mlh-mark" style="color:${MC[e.mark]}">${e.mark}</span>`:''}
+              <span class="mlh-name">${e.horseName}</span>
+              <span class="mlh-cnt">${e.raceName||''}</span>
             </div>
-          </div>
-        </div>`).join('');
-      return `
-        <div class="date-group">
-          <div class="date-heading">
-            <span class="date-label">${dk}</span>
-            <span class="date-count">${entries.length}件</span>
-            <span class="date-line"></span>
-          </div>
-          <div class="memo-log-list">${cards}</div>
-        </div>`;
+            <div class="memo-log-entries">
+              <div class="mle"><div class="mle-text">${e.text}</div></div>
+            </div>
+          </div>`).join('')}
+        </div>
+      </div>`;
     }).join('');
   }
 }
 
-function getUniqueDates(){
-  const dates=new Set();
-  Object.entries(memos)
-    .filter(([k])=>!k.startsWith('__c__'))
-    .forEach(([k,logs])=>{
-      if(Array.isArray(logs))logs.forEach(e=>{if(e.dateKey)dates.add(e.dateKey);});
-    });
-  return [...dates].sort((a,b)=>b.localeCompare(a));
-}
-
-// ===== 設定 =====
 function renderSettings(){
   document.getElementById('phraseList').innerHTML=phrases.map((p,i)=>`
     <div class="phrase-item">
       <input type="text" value="${p}" id="phrase_${i}" placeholder="定型文を入力">
-      <button class="del-btn" onclick="removePhrase(${i})">×</button>
-    </div>`).join('');
-}
-function addPhrase(){phrases.push('');renderSettings();setTimeout(()=>{const ins=document.querySelectorAll('#phraseList input');if(ins.length)ins[ins.length-1].focus();},50);}
-function removePhrase(i){phrases.splice(i,1);renderSettings();}
-function savePhrases(){
-  phrases=Array.from(document.querySelectorAll('#phraseList input')).map(el=>el.value.trim()).filter(v=>v);
-  save();renderSettings();
-  const msg=document.getElementById('phraseMsg');msg.textContent='保存しました ✓';setTimeout(()=>msg.textContent='',1500);
-}
-function clearAll(){
-  if(!confirm('全てのメモ・印をリセットしますか？'))return;
-  memos={};marks={};save();renderRaceContent();alert('リセットしました');
-}
-
-renderAll();
-</script>
-</body>
-</html>
+      <but
