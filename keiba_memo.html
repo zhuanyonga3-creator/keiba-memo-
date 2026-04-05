@@ -670,4 +670,22 @@ function renderSettings(){
   document.getElementById('phraseList').innerHTML=phrases.map((p,i)=>`
     <div class="phrase-item">
       <input type="text" value="${p}" id="phrase_${i}" placeholder="定型文を入力">
-      <but
+      <button class="del-btn" onclick="removePhrase(${i})">×</button>
+    </div>`).join('');
+}
+function addPhrase(){phrases.push('');renderSettings();setTimeout(()=>{const ins=document.querySelectorAll('#phraseList input');if(ins.length)ins[ins.length-1].focus();},50);}
+function removePhrase(i){phrases.splice(i,1);renderSettings();}
+function savePhrases(){
+  phrases=Array.from(document.querySelectorAll('#phraseList input')).map(el=>el.value.trim()).filter(v=>v);
+  save();renderSettings();
+  const msg=document.getElementById('phraseMsg');msg.textContent='保存しました ✓';setTimeout(()=>msg.textContent='',1500);
+}
+function clearAll(){
+  if(!confirm('全てのメモ・印をリセットしますか？'))return;
+  memos={};marks={};memoOpen={};save();renderRaceContent();alert('リセットしました');
+}
+
+renderAll();
+</script>
+</body>
+</html>
