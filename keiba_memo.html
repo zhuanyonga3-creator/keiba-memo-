@@ -184,6 +184,10 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
 .phrase-item input{flex:1;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--radius-sm);padding:8px 10px;font-size:13px;font-family:'Noto Sans JP',sans-serif;color:var(--text);outline:none;}
 .phrase-item input:focus{border-color:var(--accent);}
 .del-btn{width:28px;height:28px;border-radius:50%;border:0.5px solid var(--border2);background:none;color:var(--text3);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.race-del-btn{padding:4px 8px;background:none;border:0.5px solid rgba(204,51,51,0.3);border-radius:var(--radius-xs);color:#cc3333;font-size:11px;font-family:'Noto Sans JP',sans-serif;cursor:pointer;flex-shrink:0;opacity:0.7;}
+.race-del-btn:active{opacity:1;background:var(--live-bg);}
+.race-del-btn{padding:4px 8px;background:none;border:0.5px solid rgba(204,51,51,0.3);border-radius:var(--radius-xs);color:#cc3333;font-size:11px;font-family:'Noto Sans JP',sans-serif;cursor:pointer;flex-shrink:0;opacity:0.6;}
+.race-del-btn:active{opacity:1;background:var(--live-bg);}
 
 .empty{text-align:center;padding:50px 20px;color:var(--text3);}
 .empty .e-icon{font-size:44px;margin-bottom:10px;}
@@ -626,6 +630,7 @@ function renderRaceContent(){
                 ${histC?`<span class="rs-chip">⏱${histC}頭</span>`:''}
               </div>
             </div>
+            <button class="race-del-btn" onclick="event.stopPropagation();deleteRace('${r.id}','${r.name.replace(/'/g,\"\\'\")}')">削除</button>
             <span class="chevron">▾</span>
           </div>
           <div class="horse-list">${horsesHtml}</div>
@@ -672,6 +677,16 @@ function saveMemo(rid,num,name,rname,venue){
   if(btn){btn.textContent=text?'✏️メモ':'メモ＋';btn.className='memo-btn'+(text?' has-memo':'');}
   const st=document.getElementById('st_'+key);
   if(st){st.classList.add('show');setTimeout(()=>st.classList.remove('show'),1500);}
+}
+
+// ===== レース削除 =====
+function deleteRace(rid,rname){
+  if(!confirm('「'+rname+'」を削除しますか？\nメモ・印は馬名履歴に残ります。'))return;
+  races=races.filter(r=>r.id!==rid);
+  delete expanded[rid];
+  const remaining=races.filter(r=>r.dateKey===currentDate);
+  if(!remaining.length)setInitialDate();
+  save();renderAll();
 }
 
 // ===== メモ履歴 =====
