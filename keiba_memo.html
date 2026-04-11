@@ -303,7 +303,34 @@ const WC=[null,
   {bg:'#cc1166',fg:'#fff',border:'#aa0044'},
 ];
 const WCX=[{bg:'#7a6030',fg:'#fff',border:'#5a4820'},{bg:'#1a3060',fg:'#fff',border:'#0a2040'}];
-function waku(n){const w=Math.ceil(n/2);return(w>=1&&w<=8)?WC[w]:WCX[(n-17)%WCX.length]||WCX[0];}
+function waku(n, total){
+  total = total || 18;
+  // 枠番（1-8枠）の計算
+  // 頭数によって枠の割り当てが変わる
+  // JRA公式ルール:
+  //   18頭: 1-2枠2頭, 3-8枠2頭ずつ → 1-16が通常, 17はオレンジ(7枠), 18はピンク(8枠)
+  //   17頭: 1枠1頭, 2-8枠2頭ずつ → 15はオレンジ(7枠), 16-17はピンク(8枠)
+  // 簡略版: 馬番から枠色を返す
+  if(total<=16){
+    const w=Math.ceil(n/2);
+    return(w>=1&&w<=8)?WC[w]:WC[8];
+  }
+  if(total===17){
+    // 1枠:1番, 2枠:2-3番, 3枠:4-5番, 4枠:6-7番, 5枠:8-9番, 6枠:10-11番, 7枠:12-13番, 8枠:14-15番 → 16,17は8枠増枠
+    // JRA実際: 1-12は通常6枠まで, 13-15はオレンジ(7枠), 16-17はピンク(8枠)
+    if(n<=12){const w=Math.ceil(n/2);return WC[w];}
+    if(n<=15){return WC[7];} // オレンジ
+    return WC[8]; // ピンク
+  }
+  if(total>=18){
+    // 1-12は通常1-6枠, 13-15はオレンジ(7枠), 16-18はピンク(8枠)
+    if(n<=12){const w=Math.ceil(n/2);return WC[w];}
+    if(n<=15){return WC[7];} // オレンジ
+    return WC[8]; // ピンク
+  }
+  const w=Math.ceil(n/2);
+  return(w>=1&&w<=8)?WC[w]:WC[8];
+}
 const VC=['#1a6abf','#cc3333','#1a8a4a','#b8943a','#6644cc','#cc4488','#1a9aaa','#cc6600'];
 function vcol(i){return VC[i%VC.length];}
 const VK=['東京','中山','阪神','京都','中京','小倉','福島','新潟','函館','札幌'];
@@ -574,7 +601,7 @@ function renderRaceContent(){
         const cm=getCurMemo(r.id,h.num);
         const hist=getHistory(h.name);
         const hasHist=hist.length>0;
-        const wc=waku(h.num);
+        const wc=waku(h.num, r.horses.length);
         const mk=getMark(r.id,h.num);
         const isCrossed=mk==='×';
         const isMemOpen=!!memoOpen[key];
@@ -630,7 +657,7 @@ function renderRaceContent(){
                 ${histC?`<span class="rs-chip">⏱${histC}頭</span>`:''}
               </div>
             </div>
-            <button class="race-del-btn" onclick="event.stopPropagation();delRace(this)">削除</button>
+            <button class="race-del-btn" data-rid="${r.id}" onclick="event.stopPropagation();delRace(this)">削除</button>
             <span class="chevron">▾</span>
           </div>
           <div class="horse-list">${horsesHtml}</div>
@@ -681,9 +708,8 @@ function saveMemo(rid,num,name,rname,venue){
 
 // ===== レース削除 =====
 function delRace(btn){
-  const card=btn.closest('[id^="rc_"]');
-  if(!card)return;
-  const rid=card.id.replace('rc_','');
+  const rid=btn.getAttribute('data-rid');
+  if(!rid)return;
   const race=races.find(r=>r.id===rid);
   if(!race)return;
   if(!confirm('「'+race.name+'」を削除しますか？\nメモ・印は馬名履歴に残ります。'))return;
