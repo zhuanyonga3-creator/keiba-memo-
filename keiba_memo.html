@@ -630,7 +630,7 @@ function renderRaceContent(){
                 ${histC?`<span class="rs-chip">⏱${histC}頭</span>`:''}
               </div>
             </div>
-            <button class="race-del-btn" onclick="event.stopPropagation();deleteRace('${r.id}','${r.name.replace(/'/g,\"\\'\")}')">削除</button>
+            <button class="race-del-btn" onclick="event.stopPropagation();delRace(this)">削除</button>
             <span class="chevron">▾</span>
           </div>
           <div class="horse-list">${horsesHtml}</div>
@@ -680,8 +680,13 @@ function saveMemo(rid,num,name,rname,venue){
 }
 
 // ===== レース削除 =====
-function deleteRace(rid,rname){
-  if(!confirm('「'+rname+'」を削除しますか？\nメモ・印は馬名履歴に残ります。'))return;
+function delRace(btn){
+  const card=btn.closest('[id^="rc_"]');
+  if(!card)return;
+  const rid=card.id.replace('rc_','');
+  const race=races.find(r=>r.id===rid);
+  if(!race)return;
+  if(!confirm('「'+race.name+'」を削除しますか？\nメモ・印は馬名履歴に残ります。'))return;
   races=races.filter(r=>r.id!==rid);
   delete expanded[rid];
   const remaining=races.filter(r=>r.dateKey===currentDate);
