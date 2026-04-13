@@ -51,17 +51,17 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
 .msg-ok{font-size:12px;color:var(--green);}
 .msg-err{font-size:12px;color:var(--live);}
 
-/* 日付タブ（出馬表ページ上部） */
+/* 日付タブ */
 .date-tabs-wrap{margin-bottom:14px;overflow-x:auto;scrollbar-width:none;}
 .date-tabs-wrap::-webkit-scrollbar{display:none;}
 .date-tabs{display:flex;gap:6px;min-width:max-content;}
 .dtab{padding:8px 14px;border-radius:22px;border:0.5px solid var(--border2);background:var(--bg2);color:var(--text2);font-size:13px;font-family:'Noto Sans JP',sans-serif;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:6px;box-shadow:var(--shadow);}
 .dtab.active{border-color:var(--accent);color:var(--accent);font-weight:700;background:#fff;}
-.dtab .this-week-dot{width:7px;height:7px;border-radius:50%;background:var(--live);flex-shrink:0;}
+.dtab .tw-dot{width:7px;height:7px;border-radius:50%;background:var(--live);flex-shrink:0;}
 .dtab .dcnt{font-size:10px;font-family:'DM Mono',monospace;background:var(--bg3);padding:1px 5px;border-radius:7px;color:var(--text3);}
 .dtab.active .dcnt{background:rgba(184,148,58,0.15);color:var(--accent);}
 
-/* 競馬場セクション（出馬表内） */
+/* 競馬場セクション */
 .venue-section{margin-bottom:18px;}
 .venue-heading{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding:2px 0;}
 .v-bar{width:4px;height:18px;border-radius:2px;flex-shrink:0;}
@@ -73,7 +73,7 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
 .race-list{display:flex;flex-direction:column;gap:8px;}
 .race-card{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
 .race-card.expanded{border-color:rgba(184,148,58,0.4);}
-.race-header{padding:13px 15px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;}
+.race-header{padding:13px 15px;display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;}
 .race-header:active{background:var(--bg3);}
 .race-num{font-family:'DM Mono',monospace;font-size:12px;color:var(--text3);flex-shrink:0;width:26px;}
 .race-header-center{flex:1;min-width:0;}
@@ -89,6 +89,13 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
 .ms-chip{font-size:13px;font-weight:700;}
 .chevron{color:var(--text3);font-size:12px;transition:transform 0.25s;flex-shrink:0;}
 .race-card.expanded .chevron{transform:rotate(180deg);}
+/* ヘッダーのボタン群 */
+.race-header-btns{display:flex;gap:5px;flex-shrink:0;}
+.race-edit-btn{padding:4px 9px;background:none;border:0.5px solid var(--border2);border-radius:var(--radius-xs);color:var(--text2);font-size:11px;font-family:'Noto Sans JP',sans-serif;cursor:pointer;}
+.race-edit-btn:active{background:var(--bg3);}
+.race-del-btn{padding:4px 9px;background:none;border:0.5px solid rgba(204,51,51,0.3);border-radius:var(--radius-xs);color:#cc3333;font-size:11px;font-family:'Noto Sans JP',sans-serif;cursor:pointer;}
+.race-del-btn:active{background:var(--live-bg);}
+
 .horse-list{display:none;border-top:0.5px solid var(--border);}
 .race-card.expanded .horse-list{display:block;}
 
@@ -141,6 +148,45 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
 .ml-item{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--text2);}
 .ml-sym{font-size:15px;font-weight:900;}
 
+/* 編集モーダル */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:499;background:rgba(0,0,0,0.45);}
+.modal-overlay.open{display:flex;align-items:flex-end;}
+.edit-modal{width:100%;max-height:88vh;background:#fff;border-radius:var(--radius) var(--radius) 0 0;display:flex;flex-direction:column;overflow:hidden;}
+.edit-modal-header{padding:14px 16px;border-bottom:0.5px solid var(--border);display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.edit-modal-title{font-size:15px;font-weight:700;color:var(--text);flex:1;}
+.edit-modal-close{width:28px;height:28px;border-radius:50%;border:0.5px solid var(--border2);background:none;color:var(--text2);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.edit-modal-body{flex:1;overflow-y:auto;padding:14px 16px;}
+.edit-hint{font-size:12px;color:var(--text3);margin-bottom:12px;line-height:1.6;}
+.edit-horse-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
+.edit-horse-row{display:flex;align-items:center;gap:8px;background:var(--bg3);border-radius:var(--radius-sm);padding:9px 11px;}
+.edit-num-input{width:50px;border:0.5px solid var(--border2);border-radius:var(--radius-xs);padding:6px 6px;font-size:14px;font-family:'DM Mono',monospace;font-weight:700;color:var(--text);background:#fff;text-align:center;outline:none;flex-shrink:0;}
+.edit-num-input:focus{border-color:var(--accent);}
+.edit-horse-info{flex:1;min-width:0;}
+.edit-horse-name{font-size:14px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.edit-horse-jockey{font-size:12px;color:var(--text2);}
+.edit-del-btn{width:28px;height:28px;border-radius:50%;border:0.5px solid rgba(204,51,51,0.4);background:none;color:#cc3333;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.edit-del-btn:active{background:var(--live-bg);}
+.edit-modal-footer{padding:12px 16px;border-top:0.5px solid var(--border);display:flex;gap:8px;flex-shrink:0;}
+.edit-save-btn{flex:1;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);font-size:14px;font-family:'Noto Sans JP',sans-serif;font-weight:700;cursor:pointer;}
+.edit-save-btn:active{background:var(--accent2);}
+.edit-cancel-btn{padding:12px 20px;background:none;border:0.5px solid var(--border2);border-radius:var(--radius-sm);font-size:14px;font-family:'Noto Sans JP',sans-serif;color:var(--text2);cursor:pointer;}
+
+/* 印ポップアップ */
+#popOverlay{display:none;position:fixed;inset:0;z-index:599;background:rgba(0,0,0,0.2);}
+#popOverlay.open{display:block;}
+.mark-popup{display:none;position:fixed;z-index:600;background:#fff;border:0.5px solid var(--border2);border-radius:var(--radius);padding:12px 14px;box-shadow:0 8px 32px rgba(0,0,0,0.18);}
+.mark-popup.open{display:block;}
+.mark-popup-title{font-size:12px;color:var(--text2);margin-bottom:8px;font-weight:500;}
+.mark-popup-inner{display:flex;gap:8px;align-items:center;}
+.mpbtn{width:38px;height:38px;border-radius:50%;border:2px solid transparent;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:900;cursor:pointer;background:var(--bg3);font-family:'Noto Sans JP',sans-serif;}
+.mpbtn:active{transform:scale(0.88);}
+.mpbtn[data-m="◎"]{color:#b8600a;}.mpbtn[data-m="◎"].on{background:rgba(184,96,10,0.12);border-color:#b8600a;}
+.mpbtn[data-m="○"]{color:#1a5abf;}.mpbtn[data-m="○"].on{background:rgba(26,90,191,0.12);border-color:#1a5abf;}
+.mpbtn[data-m="▲"]{color:#cc3333;}.mpbtn[data-m="▲"].on{background:rgba(204,51,51,0.12);border-color:#cc3333;}
+.mpbtn[data-m="△"]{color:#1a8a4a;}.mpbtn[data-m="△"].on{background:rgba(26,138,74,0.12);border-color:#1a8a4a;}
+.mpbtn[data-m="×"]{color:#999;}.mpbtn[data-m="×"].on{background:rgba(0,0,0,0.08);border-color:#ccc;}
+.mpbtn[data-m="―"]{color:#bbb;font-size:14px;}.mpbtn[data-m="―"].on{background:rgba(0,0,0,0.06);border-color:#ccc;}
+
 /* メモ履歴 */
 .log-filter-wrap{overflow-x:auto;scrollbar-width:none;margin-bottom:14px;}
 .log-filter-wrap::-webkit-scrollbar{display:none;}
@@ -150,21 +196,16 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
 .search-bar{margin-bottom:12px;}
 .search-bar input{width:100%;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;font-size:14px;font-family:'Noto Sans JP',sans-serif;color:var(--text);outline:none;box-shadow:var(--shadow);}
 .search-bar input:focus{border-color:var(--accent);}
-
-/* 日付グループ（メモ履歴） */
 .date-group{margin-bottom:20px;}
 .date-heading{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
 .date-label{font-size:14px;font-weight:700;color:var(--accent);font-family:'DM Mono',monospace;}
 .date-count{font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;}
 .date-line{flex:1;height:0.5px;background:var(--border2);}
-
-/* 競馬場グループ（メモ履歴内） */
 .venue-group{margin-bottom:12px;}
 .venue-group-heading{display:flex;align-items:center;gap:8px;margin-bottom:7px;padding-left:2px;}
 .vg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 .vg-name{font-size:13px;font-weight:700;color:var(--text2);}
 .vg-cnt{font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;}
-
 .memo-log-list{display:flex;flex-direction:column;gap:8px;}
 .memo-log-card{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
 .memo-log-header{padding:10px 14px;border-bottom:0.5px solid var(--border);display:flex;align-items:center;gap:8px;background:var(--bg3);}
@@ -177,6 +218,7 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
 .mle-mark{font-size:14px;font-weight:900;}
 .mle-text{font-size:13px;color:var(--text);line-height:1.6;}
 
+/* 設定 */
 .settings-section{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow);}
 .section-title{font-size:13px;font-weight:500;color:var(--text2);margin-bottom:10px;}
 .phrase-list{display:flex;flex-direction:column;gap:6px;margin-bottom:10px;}
@@ -184,29 +226,9 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
 .phrase-item input{flex:1;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--radius-sm);padding:8px 10px;font-size:13px;font-family:'Noto Sans JP',sans-serif;color:var(--text);outline:none;}
 .phrase-item input:focus{border-color:var(--accent);}
 .del-btn{width:28px;height:28px;border-radius:50%;border:0.5px solid var(--border2);background:none;color:var(--text3);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
-.race-del-btn{padding:4px 8px;background:none;border:0.5px solid rgba(204,51,51,0.3);border-radius:var(--radius-xs);color:#cc3333;font-size:11px;font-family:'Noto Sans JP',sans-serif;cursor:pointer;flex-shrink:0;opacity:0.7;}
-.race-del-btn:active{opacity:1;background:var(--live-bg);}
-.race-del-btn{padding:4px 8px;background:none;border:0.5px solid rgba(204,51,51,0.3);border-radius:var(--radius-xs);color:#cc3333;font-size:11px;font-family:'Noto Sans JP',sans-serif;cursor:pointer;flex-shrink:0;opacity:0.6;}
-.race-del-btn:active{opacity:1;background:var(--live-bg);}
-
 .empty{text-align:center;padding:50px 20px;color:var(--text3);}
 .empty .e-icon{font-size:44px;margin-bottom:10px;}
 .empty p{font-size:14px;line-height:1.8;}
-
-#popOverlay{display:none;position:fixed;inset:0;z-index:499;background:rgba(0,0,0,0.2);}
-#popOverlay.open{display:block;}
-.mark-popup{display:none;position:fixed;z-index:500;background:#fff;border:0.5px solid var(--border2);border-radius:var(--radius);padding:12px 14px;box-shadow:0 8px 32px rgba(0,0,0,0.18);}
-.mark-popup.open{display:block;}
-.mark-popup-title{font-size:12px;color:var(--text2);margin-bottom:8px;font-weight:500;}
-.mark-popup-inner{display:flex;gap:8px;align-items:center;}
-.mpbtn{width:38px;height:38px;border-radius:50%;border:2px solid transparent;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:900;cursor:pointer;background:var(--bg3);transition:all 0.12s;font-family:'Noto Sans JP',sans-serif;}
-.mpbtn:active{transform:scale(0.88);}
-.mpbtn[data-m="◎"]{color:#b8600a;}.mpbtn[data-m="◎"].on{background:rgba(184,96,10,0.12);border-color:#b8600a;}
-.mpbtn[data-m="○"]{color:#1a5abf;}.mpbtn[data-m="○"].on{background:rgba(26,90,191,0.12);border-color:#1a5abf;}
-.mpbtn[data-m="▲"]{color:#cc3333;}.mpbtn[data-m="▲"].on{background:rgba(204,51,51,0.12);border-color:#cc3333;}
-.mpbtn[data-m="△"]{color:#1a8a4a;}.mpbtn[data-m="△"].on{background:rgba(26,138,74,0.12);border-color:#1a8a4a;}
-.mpbtn[data-m="×"]{color:#999;}.mpbtn[data-m="×"].on{background:rgba(0,0,0,0.08);border-color:#ccc;}
-.mpbtn[data-m="―"]{color:#bbb;font-size:14px;}.mpbtn[data-m="―"].on{background:rgba(0,0,0,0.06);border-color:#ccc;}
 </style>
 </head>
 <body>
@@ -221,24 +243,40 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
   </div>
 </header>
 
+<!-- 印ポップアップ -->
 <div id="popOverlay" onclick="closeMarkPopup()"></div>
 <div id="markPopup" class="mark-popup">
   <div class="mark-popup-title" id="popupTitle"></div>
   <div class="mark-popup-inner" id="popupInner"></div>
 </div>
 
-<div class="main">
+<!-- 編集モーダル -->
+<div id="editOverlay" class="modal-overlay" onclick="closeEditModal(event)">
+  <div class="edit-modal" onclick="event.stopPropagation()">
+    <div class="edit-modal-header">
+      <span class="edit-modal-title" id="editModalTitle">出馬表を編集</span>
+      <button class="edit-modal-close" onclick="closeEditModal()">×</button>
+    </div>
+    <div class="edit-modal-body">
+      <p class="edit-hint">・馬番を変更して保存すると番号順に並び替えられます<br>・空欄または0の馬番は末尾に移動します<br>・枠順は頭数と馬番から自動で決まります</p>
+      <div id="editHorseList" class="edit-horse-list"></div>
+    </div>
+    <div class="edit-modal-footer">
+      <button class="edit-cancel-btn" onclick="closeEditModal()">キャンセル</button>
+      <button class="edit-save-btn" onclick="saveEdit()">✅ 保存して並び替え</button>
+    </div>
+  </div>
+</div>
 
-  <!-- 出馬表 -->
+<div class="main">
   <div id="page-races" class="page active">
     <button class="csv-toggle" id="csvToggle" onclick="toggleCsv()">
       <span>＋ CSVを追加・更新</span><span class="arr">▾</span>
     </button>
     <div class="csv-panel" id="csvPanel">
-      <label>CSVフォーマット（日付列を追加推奨）</label>
+      <label>CSVフォーマット</label>
       <code>競馬場,日付,レース名,コース,時刻,ステータス,馬番,馬名,騎手,オッズ
 阪神,2026/04/12,阪神11R,芝1600m,15:40,upcoming,1,馬名A,騎手A,2.3</code>
-      <label>※日付列がない場合は今日の日付として扱います</label>
       <textarea id="csvInput" placeholder="ここにCSVテキストを貼り付け..."></textarea>
       <div class="btn-row">
         <button class="btn btn-accent" onclick="importCsv()">追加で取り込む</button>
@@ -254,25 +292,18 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
       <span class="ml-item"><span class="ml-sym" style="color:#1a8a4a">△</span>連下</span>
       <span class="ml-item"><span class="ml-sym" style="color:#999">×</span>消し</span>
     </div>
-    <!-- 日付タブ -->
     <div class="date-tabs-wrap" id="dateTabsWrap" style="display:none">
       <div class="date-tabs" id="dateTabsInner"></div>
     </div>
     <div id="raceContent"></div>
   </div>
 
-  <!-- メモ履歴 -->
   <div id="page-memolog" class="page">
-    <div class="search-bar">
-      <input type="text" id="memoSearch" placeholder="馬名・レース名で検索..." oninput="renderMemoLog()">
-    </div>
-    <div class="log-filter-wrap">
-      <div class="log-filter-tabs" id="logFilterTabs"></div>
-    </div>
+    <div class="search-bar"><input type="text" id="memoSearch" placeholder="馬名・レース名で検索..." oninput="renderMemoLog()"></div>
+    <div class="log-filter-wrap"><div class="log-filter-tabs" id="logFilterTabs"></div></div>
     <div id="memoLogList"></div>
   </div>
 
-  <!-- 設定 -->
   <div id="page-settings" class="page">
     <div class="settings-section">
       <div class="section-title">📝 定型文（ワンタッチメモ）</div>
@@ -286,10 +317,10 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
       <button class="btn btn-danger" onclick="clearAll()" style="width:100%;">全メモ・印をリセット</button>
     </div>
   </div>
-
 </div>
 
 <script>
+// ===== 定数 =====
 const MARKS=['◎','○','▲','△','×'];
 const MC={'◎':'#b8600a','○':'#1a5abf','▲':'#cc3333','△':'#1a8a4a','×':'#999','―':'#ccc'};
 const WC=[null,
@@ -303,87 +334,71 @@ const WC=[null,
   {bg:'#cc1166',fg:'#fff',border:'#aa0044'},
 ];
 const WCX=[{bg:'#7a6030',fg:'#fff',border:'#5a4820'},{bg:'#1a3060',fg:'#fff',border:'#0a2040'}];
+
+// 頭数に応じた枠順カラー（JRA公式準拠）
 function waku(n, total){
-  total = total || 18;
-  // 枠番（1-8枠）の計算
-  // 頭数によって枠の割り当てが変わる
-  // JRA公式ルール:
-  //   18頭: 1-2枠2頭, 3-8枠2頭ずつ → 1-16が通常, 17はオレンジ(7枠), 18はピンク(8枠)
-  //   17頭: 1枠1頭, 2-8枠2頭ずつ → 15はオレンジ(7枠), 16-17はピンク(8枠)
-  // 簡略版: 馬番から枠色を返す
+  total=total||18;
   if(total<=16){
     const w=Math.ceil(n/2);
     return(w>=1&&w<=8)?WC[w]:WC[8];
   }
   if(total===17){
-    // 1枠:1番, 2枠:2-3番, 3枠:4-5番, 4枠:6-7番, 5枠:8-9番, 6枠:10-11番, 7枠:12-13番, 8枠:14-15番 → 16,17は8枠増枠
-    // JRA実際: 1-12は通常6枠まで, 13-15はオレンジ(7枠), 16-17はピンク(8枠)
-    if(n<=12){const w=Math.ceil(n/2);return WC[w];}
-    if(n<=15){return WC[7];} // オレンジ
-    return WC[8]; // ピンク
+    if(n<=12){return WC[Math.ceil(n/2)];}
+    if(n<=15){return WC[7];}
+    return WC[8];
   }
-  if(total>=18){
-    // 1-12は通常1-6枠, 13-15はオレンジ(7枠), 16-18はピンク(8枠)
-    if(n<=12){const w=Math.ceil(n/2);return WC[w];}
-    if(n<=15){return WC[7];} // オレンジ
-    return WC[8]; // ピンク
-  }
-  const w=Math.ceil(n/2);
-  return(w>=1&&w<=8)?WC[w]:WC[8];
+  // 18頭以上: 1-12→1-6枠, 13-15→オレンジ(7枠), 16-18→ピンク(8枠)
+  if(n<=12){return WC[Math.ceil(n/2)];}
+  if(n<=15){return WC[7];}
+  return WC[8];
 }
+
 const VC=['#1a6abf','#cc3333','#1a8a4a','#b8943a','#6644cc','#cc4488','#1a9aaa','#cc6600'];
 function vcol(i){return VC[i%VC.length];}
 const VK=['東京','中山','阪神','京都','中京','小倉','福島','新潟','函館','札幌'];
 function gv(n){for(const v of VK)if(n.includes(v))return v;return'その他';}
 
-// 今週の土日を取得
+// 今週の土日
 function getThisWeekend(){
-  const now=new Date();
-  const day=now.getDay();
-  const sat=new Date(now);
-  sat.setDate(now.getDate()+(day===0?-1:6-day));
+  const now=new Date();const day=now.getDay();
+  const sat=new Date(now);sat.setDate(now.getDate()+(day===0?-1:6-day));
   const sun=new Date(sat);sun.setDate(sat.getDate()+1);
-  function fmt(d){return`${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}`;}
+  const fmt=d=>`${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}`;
   return[fmt(sat),fmt(sun)];
 }
-function isThisWeek(dateKey){
-  const weekend=getThisWeekend();
-  return weekend.includes(dateKey);
-}
+function isThisWeek(dk){return getThisWeekend().includes(dk);}
 function todayKey(){
-  const now=new Date();
-  return`${now.getFullYear()}/${String(now.getMonth()+1).padStart(2,'0')}/${String(now.getDate()).padStart(2,'0')}`;
+  const n=new Date();
+  return`${n.getFullYear()}/${String(n.getMonth()+1).padStart(2,'0')}/${String(n.getDate()).padStart(2,'0')}`;
 }
 function formatDateLabel(dk){
   const[y,m,d]=dk.split('/');
-  const date=new Date(parseInt(y),parseInt(m)-1,parseInt(d));
-  const days=['日','月','火','水','木','金','土'];
-  return`${parseInt(m)}/${parseInt(d)}(${days[date.getDay()]})`;
+  const dt=new Date(parseInt(y),parseInt(m)-1,parseInt(d));
+  return`${parseInt(m)}/${parseInt(d)}(${'日月火水木金土'[dt.getDay()]})`;
 }
 
+// ===== ストレージ =====
 let races=[],memos={},marks={},expanded={},memoOpen={},phrases=[],currentDate='ALL',logMode='date';
-
-const BUILTIN_CSV=`競馬場,日付,レース名,コース,時刻,ステータス,馬番,馬名,騎手,オッズ
-阪神,2026/04/12,阪神11R 桜花賞,芝1600m,15:40,upcoming,1,馬名A,騎手A,
-阪神,2026/04/12,阪神11R 桜花賞,芝1600m,15:40,upcoming,2,馬名B,騎手B,`;
+let editRaceId=null;
 
 function load(){
-  try{const s=localStorage.getItem('km9_races');if(s)races=JSON.parse(s);}catch(e){}
-  try{const s=localStorage.getItem('km9_memos');if(s)memos=JSON.parse(s);}catch(e){}
-  try{const s=localStorage.getItem('km9_marks');if(s)marks=JSON.parse(s);}catch(e){}
-  try{const s=localStorage.getItem('km9_phrases');if(s)phrases=JSON.parse(s);}catch(e){}
+  try{const s=localStorage.getItem('km10_races');if(s)races=JSON.parse(s);}catch(e){}
+  try{const s=localStorage.getItem('km10_memos');if(s)memos=JSON.parse(s);}catch(e){}
+  try{const s=localStorage.getItem('km10_marks');if(s)marks=JSON.parse(s);}catch(e){}
+  try{const s=localStorage.getItem('km10_phrases');if(s)phrases=JSON.parse(s);}catch(e){}
   if(!phrases.length)phrases=['好調','前走好内容','距離○','要注意','消し','本命'];
 }
 function save(){
   try{
-    localStorage.setItem('km9_races',JSON.stringify(races));
-    localStorage.setItem('km9_memos',JSON.stringify(memos));
-    localStorage.setItem('km9_marks',JSON.stringify(marks));
-    localStorage.setItem('km9_phrases',JSON.stringify(phrases));
+    localStorage.setItem('km10_races',JSON.stringify(races));
+    localStorage.setItem('km10_memos',JSON.stringify(memos));
+    localStorage.setItem('km10_marks',JSON.stringify(marks));
+    localStorage.setItem('km10_phrases',JSON.stringify(phrases));
   }catch(e){}
 }
 load();
 
+// ===== ページ切替 =====
 function showPage(n,el){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.htab').forEach(t=>t.classList.remove('active'));
@@ -393,25 +408,19 @@ function showPage(n,el){
   if(n==='settings')renderSettings();
 }
 
-// 日付キー正規化
+// ===== CSV =====
 function normDate(s){
   if(!s)return todayKey();
   s=s.trim();
-  // YYYY/MM/DD or YYYY-MM-DD
   const m=s.match(/(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/);
   if(m)return`${m[1]}/${m[2].padStart(2,'0')}/${m[3].padStart(2,'0')}`;
-  // MM/DD
-  const m2=s.match(/^(\d{1,2})[\/](\d{1,2})$/);
-  if(m2)return`${new Date().getFullYear()}/${m2[1].padStart(2,'0')}/${m2[2].padStart(2,'0')}`;
   return todayKey();
 }
-
 function parseCsv(text){
   const lines=text.trim().split('\n').map(l=>l.trim()).filter(l=>l);
   if(lines.length<2)return{error:'データがありません'};
   const h=lines[0].split(',').map(s=>s.trim());
-  const hasV=h.includes('競馬場');
-  const hasD=h.includes('日付');
+  const hasV=h.includes('競馬場'),hasD=h.includes('日付');
   for(const n of['レース名','馬番','馬名'])if(!h.includes(n))return{error:`「${n}」列が見つかりません`};
   const idx=k=>h.indexOf(k);
   const map={};
@@ -420,30 +429,23 @@ function parseCsv(text){
     const rn=c[idx('レース名')];if(!rn)continue;
     const dk=hasD&&idx('日付')>=0?normDate(c[idx('日付')]):todayKey();
     const venue=hasV&&idx('競馬場')>=0?c[idx('競馬場')]:gv(rn);
-    const mapKey=dk+'__'+rn;
-    if(!map[mapKey])map[mapKey]={
-      id:'r'+Object.keys(map).length,
-      name:rn,venue,
-      dateKey:dk,
+    const mk=dk+'__'+rn;
+    if(!map[mk])map[mk]={id:'r'+Object.keys(map).length,name:rn,venue,dateKey:dk,
       course:idx('コース')>=0?c[idx('コース')]:'',
       time:idx('時刻')>=0?c[idx('時刻')]:'',
-      status:idx('ステータス')>=0?c[idx('ステータス')]:'upcoming',
-      horses:[]
-    };
-    map[mapKey].horses.push({
-      num:idx('馬番')>=0?(parseInt(c[idx('馬番')])||map[mapKey].horses.length+1):map[mapKey].horses.length+1,
+      status:idx('ステータス')>=0?c[idx('ステータス')]:'upcoming',horses:[]};
+    map[mk].horses.push({
+      num:idx('馬番')>=0?(parseInt(c[idx('馬番')])||map[mk].horses.length+1):map[mk].horses.length+1,
       name:idx('馬名')>=0?c[idx('馬名')]:'',
       jockey:idx('騎手')>=0?c[idx('騎手')]:'',
       odds:idx('オッズ')>=0?c[idx('オッズ')]:''
     });
   }
-  // 馬番順にソート
   Object.values(map).forEach(r=>r.horses.sort((a,b)=>a.num-b.num));
   const result=Object.values(map);
   if(!result.length)return{error:'有効な行がありません'};
   return{races:result};
 }
-
 function importCsv(){
   const text=document.getElementById('csvInput').value;
   const msg=document.getElementById('csvMsg');
@@ -454,9 +456,7 @@ function importCsv(){
     const ex=races.find(er=>er.dateKey===nr.dateKey&&er.name===nr.name);
     if(!ex)races.push(nr);else Object.assign(ex,nr);
   });
-  expanded={};memoOpen={};
-  setInitialDate();
-  save();renderAll();
+  expanded={};memoOpen={};setInitialDate();save();renderAll();
   msg.className='msg-ok';msg.textContent=`${r.races.length}レース 追加しました ✓`;
 }
 function replaceWithCsv(){
@@ -465,9 +465,7 @@ function replaceWithCsv(){
   if(!text.trim()){msg.className='msg-err';msg.textContent='テキストを入力してください';return;}
   const r=parseCsv(text);
   if(r.error){msg.className='msg-err';msg.textContent=r.error;return;}
-  races=r.races;expanded={};memoOpen={};
-  setInitialDate();
-  save();renderAll();
+  races=r.races;expanded={};memoOpen={};setInitialDate();save();renderAll();
   document.getElementById('csvPanel').classList.remove('open');
   document.getElementById('csvToggle').classList.remove('open');
   msg.className='msg-ok';msg.textContent=`${r.races.length}レース 入れ替えました ✓`;
@@ -492,25 +490,41 @@ function toggleCsv(){
   document.getElementById('csvToggle').classList.toggle('open');
 }
 
-// 日付の一覧取得（新しい順）
+// ===== 日付 =====
 function getDateKeys(){
   const s=new Set(races.map(r=>r.dateKey));
   return[...s].sort((a,b)=>b.localeCompare(a));
 }
-
-// 初期日付を今週に設定
 function setInitialDate(){
   const dates=getDateKeys();
   if(!dates.length){currentDate='ALL';return;}
-  // 今週の日付があればそれを優先
   const tw=dates.find(d=>isThisWeek(d));
   currentDate=tw||dates[0];
 }
+function selectDate(d){currentDate=d;renderAll();}
+function renderAll(){renderDateTabs();renderRaceContent();}
 
+function renderDateTabs(){
+  const dates=getDateKeys();
+  const wrap=document.getElementById('dateTabsWrap');
+  const inner=document.getElementById('dateTabsInner');
+  if(!dates.length){wrap.style.display='none';return;}
+  wrap.style.display='block';
+  inner.innerHTML=dates.map(d=>{
+    const tw=isThisWeek(d);
+    const cnt=races.filter(r=>r.dateKey===d).length;
+    return`<button class="dtab ${currentDate===d?'active':''}" onclick="selectDate('${d}')">
+      ${tw?'<span class="tw-dot"></span>':''}${formatDateLabel(d)}<span class="dcnt">${cnt}</span>
+    </button>`;
+  }).join('');
+}
+
+// ===== ヘルパー =====
 function getHistory(name){return memos[name]||[];}
-function getCurMemo(rid,num){return memos['__c__'+rid+'_'+num]||'';}
-function getMark(rid,num){return marks[rid+'_'+num]||'―';}
+function getCurMemo(rid,num,name){return memos['__c__'+rid+'_'+num+'_'+(name||'')]||'';}
+function getMark(rid,num,name){return marks[rid+'_'+num+'_'+(name||'')]||'―';}
 
+// ===== 印ポップアップ =====
 function openMarkPopup(key,horseName,btnEl){
   const cur=marks[key]||'―';
   document.getElementById('popupTitle').textContent=horseName;
@@ -533,51 +547,93 @@ function setMark(key,m){
   save();closeMarkPopup();renderRaceContent();
 }
 
-function selectDate(d){currentDate=d;renderAll();}
-function renderAll(){renderDateTabs();renderRaceContent();}
-
-function renderDateTabs(){
-  const dates=getDateKeys();
-  const wrap=document.getElementById('dateTabsWrap');
-  const inner=document.getElementById('dateTabsInner');
-  if(dates.length===0){wrap.style.display='none';return;}
-  wrap.style.display='block';
-
-  inner.innerHTML=dates.map(d=>{
-    const tw=isThisWeek(d);
-    const cnt=races.filter(r=>r.dateKey===d).length;
-    return`<button class="dtab ${currentDate===d?'active':''}" onclick="selectDate('${d}')">
-      ${tw?`<span class="this-week-dot"></span>`:''}
-      ${formatDateLabel(d)}
-      <span class="dcnt">${cnt}</span>
-    </button>`;
-  }).join('');
+// ===== 編集モーダル =====
+function openEditModal(rid){
+  const race=races.find(r=>r.id===rid);
+  if(!race)return;
+  editRaceId=rid;
+  document.getElementById('editModalTitle').textContent=race.name+' を編集';
+  renderEditHorseList(race);
+  document.getElementById('editOverlay').classList.add('open');
+}
+function closeEditModal(e){
+  if(e&&e.target!==document.getElementById('editOverlay'))return;
+  document.getElementById('editOverlay').classList.remove('open');
+  editRaceId=null;
+}
+function renderEditHorseList(race){
+  const el=document.getElementById('editHorseList');
+  el.innerHTML=race.horses.map((h,i)=>`
+    <div class="edit-horse-row" id="erow_${i}">
+      <input class="edit-num-input" type="number" min="0" max="99" value="${h.num}" id="enum_${i}" placeholder="馬番">
+      <div class="edit-horse-info">
+        <div class="edit-horse-name">${h.name}</div>
+        <div class="edit-horse-jockey">${h.jockey||''}${h.odds?' 単'+h.odds+'倍':''}</div>
+      </div>
+      <button class="edit-del-btn" onclick="editDelHorse(${i})">×</button>
+    </div>
+  `).join('');
+}
+function editDelHorse(idx){
+  const race=races.find(r=>r.id===editRaceId);
+  if(!race)return;
+  if(!confirm(`「${race.horses[idx].name}」を削除しますか？`))return;
+  race.horses.splice(idx,1);
+  renderEditHorseList(race);
+}
+function saveEdit(){
+  const race=races.find(r=>r.id===editRaceId);
+  if(!race)return;
+  // 各行から馬番を取得
+  race.horses.forEach((h,i)=>{
+    const input=document.getElementById('enum_'+i);
+    if(input){
+      const v=parseInt(input.value);
+      h.num=isNaN(v)||v<=0?999:v;
+    }
+  });
+  // 馬番順に並び替え（同じ番号は元の順序を維持）
+  race.horses.sort((a,b)=>a.num-b.num);
+  // 999（番号なし）は末尾に移動済みなのでそのまま
+  save();
+  document.getElementById('editOverlay').classList.remove('open');
+  editRaceId=null;
+  renderRaceContent();
 }
 
+// ===== レース削除 =====
+function delRace(btn){
+  const rid=btn.getAttribute('data-rid');
+  if(!rid)return;
+  const race=races.find(r=>r.id===rid);
+  if(!race)return;
+  if(!confirm('「'+race.name+'」を削除しますか？\nメモ・印は馬名履歴に残ります。'))return;
+  races=races.filter(r=>r.id!==rid);
+  delete expanded[rid];
+  const remaining=races.filter(r=>r.dateKey===currentDate);
+  if(!remaining.length)setInitialDate();
+  save();renderAll();
+}
+
+// ===== 出馬表描画 =====
 function renderRaceContent(){
   const el=document.getElementById('raceContent');
   if(!races.length){
     el.innerHTML=`<div class="empty"><div class="e-icon">🐎</div><p>CSVをインポートして<br>出馬表を追加してください</p></div>`;
     return;
   }
-
-  // 表示対象レース
   const targetRaces=currentDate==='ALL'?races:races.filter(r=>r.dateKey===currentDate);
   if(!targetRaces.length){
     el.innerHTML=`<div class="empty"><div class="e-icon">📅</div><p>この日付のレースはありません</p></div>`;
     return;
   }
-
-  // 競馬場ごとにグループ分け（順序を保持）
   const venueOrder=[];
   const venueMap={};
   targetRaces.forEach(r=>{
     if(!venueMap[r.venue]){venueMap[r.venue]=[];venueOrder.push(r.venue);}
     venueMap[r.venue].push(r);
   });
-
   el.innerHTML=venueOrder.map((venue,vi)=>{
-    // レースを1R順にソート
     const vr=venueMap[venue].slice().sort((a,b)=>{
       const na=parseInt(a.name.match(/(\d+)R/)?.[1]||'99');
       const nb=parseInt(b.name.match(/(\d+)R/)?.[1]||'99');
@@ -585,35 +641,36 @@ function renderRaceContent(){
     });
     const color=vcol(vi);
     const hasLive=vr.some(r=>r.status==='live');
-
     const racesHtml=vr.map(r=>{
       const isOpen=!!expanded[r.id];
       const bc=r.status==='live'?'badge-live':'badge-upcoming';
       const bt=r.status==='live'?'● LIVE':'▲ 予定';
-      const memoC=r.horses.filter(h=>getCurMemo(r.id,h.num)).length;
+      const memoC=r.horses.filter(h=>getCurMemo(r.id,h.num,h.name)).length;
       const histC=r.horses.filter(h=>getHistory(h.name).length>0).length;
-      const markedH=r.horses.filter(h=>getMark(r.id,h.num)!=='―'&&getMark(r.id,h.num)!=='×');
+      const markedH=r.horses.filter(h=>{const m=getMark(r.id,h.num,h.name);return m!=='―'&&m!=='×';});
       const marksSumHtml=markedH.length?`<div class="marks-summary">`+
-        markedH.map(h=>{const m=getMark(r.id,h.num);return`<span class="ms-chip" style="color:${MC[m]}">${m}${h.num}</span>`;}).join('')+`</div>`:'';
-
+        markedH.map(h=>{const m=getMark(r.id,h.num,h.name);return`<span class="ms-chip" style="color:${MC[m]}">${m}${h.num}</span>`;}).join('')+`</div>`:'';
       const horsesHtml=r.horses.map(h=>{
-        const key=r.id+'_'+h.num;
-        const cm=getCurMemo(r.id,h.num);
+        const key=r.id+'_'+h.num+'_'+h.name;
+        const cm=getCurMemo(r.id,h.num,h.name);
         const hist=getHistory(h.name);
         const hasHist=hist.length>0;
-        const wc=waku(h.num, r.horses.length);
-        const mk=getMark(r.id,h.num);
+        const wc=waku(h.num,r.horses.length);
+        const mk=getMark(r.id,h.num,h.name);
         const isCrossed=mk==='×';
         const isMemOpen=!!memoOpen[key];
         const histH=hasHist?`<div class="history-block"><div class="history-title">⏱ 過去のメモ（${hist.length}件）</div>${hist.slice(-3).reverse().map(e=>`<div class="history-entry"><div class="h-date">${e.raceName||''} ${e.date||''}</div><div class="h-text">${e.text}</div></div>`).join('')}</div>`:'';
         const phraseH=phrases.filter(p=>p.trim()).map(p=>`<button class="phrase-btn" onclick="insertPhrase('${key}','${p.replace(/'/g,"\\'")}')">＋${p}</button>`).join('');
+        const safeKey=key.replace(/'/g,"\\'");
+        const safeName=h.name.replace(/'/g,"\\'");
+        const safeRname=r.name.replace(/'/g,"\\'");
         return`
-          <div class="horse-card ${hasHist?'has-history':''} ${isCrossed?'crossed-out':''}" id="card_${key}">
+          <div class="horse-card ${hasHist?'has-history':''} ${isCrossed?'crossed-out':''}" id="card_${r.id}_${h.num}">
             <div class="horse-main">
               <div class="waku-badge" style="background:${wc.bg};color:${wc.fg};border:2px solid ${wc.border}">
                 ${h.num}${hasHist?'<span class="history-star">⭐</span>':''}
               </div>
-              <span class="current-mark" data-m="${mk}" onclick="event.stopPropagation();openMarkPopup('${key}','${h.name.replace(/'/g,"\\'")}',this)">${mk}</span>
+              <span class="current-mark" data-m="${mk}" onclick="event.stopPropagation();openMarkPopup('${safeKey}','${safeName}',this)">${mk}</span>
               <div class="horse-info">
                 <div class="horse-name-row">
                   <span class="horse-name">${h.name}</span>
@@ -625,20 +682,19 @@ function renderRaceContent(){
                 </div>
                 ${cm?`<div class="memo-prev">📝 ${cm}</div>`:''}
               </div>
-              <button class="memo-btn ${cm?'has-memo':''}" onclick="event.stopPropagation();toggleMemo('${key}')">${cm?'✏️メモ':'メモ＋'}</button>
+              <button class="memo-btn ${cm?'has-memo':''}" onclick="event.stopPropagation();toggleMemo('${safeKey}')">${cm?'✏️メモ':'メモ＋'}</button>
             </div>
-            <div class="memo-area ${isMemOpen?'open':''}" id="memo_${key}">
+            <div class="memo-area ${isMemOpen?'open':''}" id="memo_${r.id}_${h.num}">
               ${histH}
               ${phraseH?`<div class="phrase-btns">${phraseH}</div>`:''}
-              <textarea id="ta_${key}" placeholder="この馬のメモ...">${cm}</textarea>
+              <textarea id="ta_${r.id}_${h.num}" placeholder="この馬のメモ...">${cm}</textarea>
               <div class="memo-actions">
-                <button class="save-btn" onclick="saveMemo('${r.id}','${h.num}','${h.name.replace(/'/g,"\\'")}','${r.name.replace(/'/g,"\\'")}','${r.venue}')">保存</button>
-                <span class="saved-msg" id="st_${key}">saved ✓</span>
+                <button class="save-btn" onclick="saveMemo('${r.id}','${h.num}','${safeName}','${safeRname}','${r.venue}')">保存</button>
+                <span class="saved-msg" id="st_${r.id}_${h.num}">saved ✓</span>
               </div>
             </div>
           </div>`;
       }).join('');
-
       const rnm=r.name.match(/(\d+)R/);
       return`
         <div class="race-card ${isOpen?'expanded':''}" id="rc_${r.id}">
@@ -657,13 +713,15 @@ function renderRaceContent(){
                 ${histC?`<span class="rs-chip">⏱${histC}頭</span>`:''}
               </div>
             </div>
-            <button class="race-del-btn" data-rid="${r.id}" onclick="event.stopPropagation();delRace(this)">削除</button>
+            <div class="race-header-btns">
+              <button class="race-edit-btn" onclick="event.stopPropagation();openEditModal('${r.id}')">編集</button>
+              <button class="race-del-btn" data-rid="${r.id}" onclick="event.stopPropagation();delRace(this)">削除</button>
+            </div>
             <span class="chevron">▾</span>
           </div>
           <div class="horse-list">${horsesHtml}</div>
         </div>`;
     }).join('');
-
     return`
       <div class="venue-section">
         <div class="venue-heading">
@@ -680,16 +738,20 @@ function renderRaceContent(){
 function toggleRace(id){expanded[id]=!expanded[id];renderRaceContent();}
 function toggleMemo(key){
   memoOpen[key]=!memoOpen[key];
-  const el=document.getElementById('memo_'+key);
+  const parts=key.split('_');
+  const rid=parts[0],num=parts[1];
+  const el=document.getElementById('memo_'+rid+'_'+num);
   if(el)el.classList.toggle('open',!!memoOpen[key]);
 }
 function insertPhrase(key,text){
-  const ta=document.getElementById('ta_'+key);
+  const parts=key.split('_');const rid=parts[0],num=parts[1];
+  const ta=document.getElementById('ta_'+rid+'_'+num);
   if(!ta)return;ta.value=ta.value?ta.value+'　'+text:text;ta.focus();
 }
 function saveMemo(rid,num,name,rname,venue){
-  const key=rid+'_'+num;
-  const text=document.getElementById('ta_'+key)?.value||'';
+  const key=rid+'_'+num+'_'+name;
+  const ta=document.getElementById('ta_'+rid+'_'+num);
+  const text=ta?ta.value:'';
   const now=new Date();
   const date=now.toLocaleDateString('ja-JP',{year:'numeric',month:'numeric',day:'numeric'});
   const dateKey=`${now.getFullYear()}/${String(now.getMonth()+1).padStart(2,'0')}/${String(now.getDate()).padStart(2,'0')}`;
@@ -698,26 +760,12 @@ function saveMemo(rid,num,name,rname,venue){
   if(text)memos[name].push({raceId:rid,raceName:rname,venue:venue||'',date,dateKey,text,mark:marks[key]||'―'});
   memos['__c__'+key]=text;
   save();
-  const prev=document.querySelector(`#card_${key} .memo-prev`);
+  const prev=document.querySelector(`#card_${rid}_${num} .memo-prev`);
   if(prev)prev.textContent=text?'📝 '+text:'';
-  const btn=document.querySelector(`#card_${key} .memo-btn`);
+  const btn=document.querySelector(`#card_${rid}_${num} .memo-btn`);
   if(btn){btn.textContent=text?'✏️メモ':'メモ＋';btn.className='memo-btn'+(text?' has-memo':'');}
-  const st=document.getElementById('st_'+key);
+  const st=document.getElementById('st_'+rid+'_'+num);
   if(st){st.classList.add('show');setTimeout(()=>st.classList.remove('show'),1500);}
-}
-
-// ===== レース削除 =====
-function delRace(btn){
-  const rid=btn.getAttribute('data-rid');
-  if(!rid)return;
-  const race=races.find(r=>r.id===rid);
-  if(!race)return;
-  if(!confirm('「'+race.name+'」を削除しますか？\nメモ・印は馬名履歴に残ります。'))return;
-  races=races.filter(r=>r.id!==rid);
-  delete expanded[rid];
-  const remaining=races.filter(r=>r.dateKey===currentDate);
-  if(!remaining.length)setInitialDate();
-  save();renderAll();
 }
 
 // ===== メモ履歴 =====
@@ -729,28 +777,21 @@ function getUniqueDates(){
   });
   return[...s].sort((a,b)=>b.localeCompare(a));
 }
-
 function renderMemoLog(){
   const q=(document.getElementById('memoSearch')?.value||'').trim();
   const dates=getUniqueDates();
-
-  // フィルタータブ
   document.getElementById('logFilterTabs').innerHTML=`
     <button class="lftab ${logMode==='date'?'active':''}" onclick="setLogMode('date')">📅 日付別</button>
     <button class="lftab ${logMode==='horse'?'active':''}" onclick="setLogMode('horse')">🐴 馬名別</button>
     ${dates.map(d=>`<button class="lftab ${logMode===d?'active':''}" onclick="setLogMode('${d}')">${formatDateLabel(d)}</button>`).join('')}`;
-
   const el=document.getElementById('memoLogList');
   const allEntries=[];
   Object.entries(memos).filter(([k])=>!k.startsWith('__c__')).filter(([k,v])=>Array.isArray(v)&&v.length>0)
     .forEach(([horseName,logs])=>logs.forEach(log=>allEntries.push({horseName,...log})));
-
   if(!allEntries.length){el.innerHTML=`<div class="empty"><div class="e-icon">📝</div><p>まだメモがありません</p></div>`;return;}
   const filtered=allEntries.filter(e=>!q||e.horseName.includes(q)||e.raceName?.includes(q)||e.venue?.includes(q));
   if(!filtered.length){el.innerHTML=`<div class="empty"><div class="e-icon">🔍</div><p>該当するメモがありません</p></div>`;return;}
-
   if(logMode==='horse'){
-    // 馬名別
     const byHorse={};
     filtered.forEach(e=>{if(!byHorse[e.horseName])byHorse[e.horseName]=[];byHorse[e.horseName].push(e);});
     el.innerHTML=`<div class="memo-log-list">`+Object.entries(byHorse).map(([name,logs])=>{
@@ -758,8 +799,7 @@ function renderMemoLog(){
       return`<div class="memo-log-card">
         <div class="memo-log-header">
           ${mk!=='―'?`<span class="mlh-mark" style="color:${MC[mk]}">${mk}</span>`:''}
-          <span class="mlh-name">${name}</span>
-          <span class="mlh-race">${logs.length}件</span>
+          <span class="mlh-name">${name}</span><span class="mlh-race">${logs.length}件</span>
         </div>
         <div class="memo-log-entries">
           ${logs.slice().reverse().map(e=>`<div class="mle">
@@ -772,65 +812,45 @@ function renderMemoLog(){
         </div>
       </div>`;
     }).join('')+`</div>`;
-
-  } else {
-    // 日付別（特定日or全日付）
+  }else{
     const target=(logMode!=='date'&&logMode!=='horse')?logMode:null;
-    const targetFiltered=target?filtered.filter(e=>e.dateKey===target):filtered;
-
     const byDate={};
-    targetFiltered.forEach(e=>{
+    filtered.filter(e=>!target||e.dateKey===target).forEach(e=>{
       const dk=e.dateKey||'不明';
       if(!byDate[dk])byDate[dk]={};
       const ven=e.venue||'その他';
       if(!byDate[dk][ven])byDate[dk][ven]=[];
       byDate[dk][ven].push(e);
     });
-
     const sortedDates=Object.keys(byDate).sort((a,b)=>b.localeCompare(a));
     if(!sortedDates.length){el.innerHTML=`<div class="empty"><div class="e-icon">📅</div><p>この日付のメモはありません</p></div>`;return;}
-
     el.innerHTML=sortedDates.map(dk=>{
       const venueMap=byDate[dk];
-      const venueOrder=Object.keys(venueMap);
-      const totalCnt=venueOrder.reduce((a,v)=>a+venueMap[v].length,0);
-
-      const venuesHtml=venueOrder.map((ven,vi)=>{
-        const entries=venueMap[ven];
-        const color=vcol(vi);
-        const cardsHtml=entries.map(e=>`
-          <div class="memo-log-card">
-            <div class="memo-log-header">
-              ${e.mark&&e.mark!=='―'?`<span class="mlh-mark" style="color:${MC[e.mark]}">${e.mark}</span>`:''}
-              <span class="mlh-name">${e.horseName}</span>
-              <span class="mlh-race">${e.raceName||''}</span>
-            </div>
-            <div class="memo-log-entries">
-              <div class="mle">
-                <div class="mle-text">${e.text}</div>
-              </div>
-            </div>
-          </div>`).join('');
-        return`
+      const total=Object.values(venueMap).reduce((a,v)=>a+v.length,0);
+      return`<div class="date-group">
+        <div class="date-heading">
+          <span class="date-label">${formatDateLabel(dk)}</span>
+          <span class="date-count">${total}件</span>
+          <span class="date-line"></span>
+        </div>
+        ${Object.entries(venueMap).map(([ven,entries],vi)=>`
           <div class="venue-group">
             <div class="venue-group-heading">
-              <span class="vg-dot" style="background:${color}"></span>
-              <span class="vg-name">${ven}</span>
-              <span class="vg-cnt">${entries.length}件</span>
+              <span class="vg-dot" style="background:${vcol(vi)}"></span>
+              <span class="vg-name">${ven}</span><span class="vg-cnt">${entries.length}件</span>
             </div>
-            <div class="memo-log-list">${cardsHtml}</div>
-          </div>`;
-      }).join('');
-
-      return`
-        <div class="date-group">
-          <div class="date-heading">
-            <span class="date-label">${formatDateLabel(dk)}</span>
-            <span class="date-count">${totalCnt}件</span>
-            <span class="date-line"></span>
-          </div>
-          ${venuesHtml}
-        </div>`;
+            <div class="memo-log-list">${entries.map(e=>`
+              <div class="memo-log-card">
+                <div class="memo-log-header">
+                  ${e.mark&&e.mark!=='―'?`<span class="mlh-mark" style="color:${MC[e.mark]}">${e.mark}</span>`:''}
+                  <span class="mlh-name">${e.horseName}</span>
+                  <span class="mlh-race">${e.raceName||''}</span>
+                </div>
+                <div class="memo-log-entries"><div class="mle"><div class="mle-text">${e.text}</div></div></div>
+              </div>`).join('')}
+            </div>
+          </div>`).join('')}
+      </div>`;
     }).join('');
   }
 }
@@ -855,7 +875,6 @@ function clearAll(){
   memos={};marks={};memoOpen={};save();renderRaceContent();alert('リセットしました');
 }
 
-// 初期化
 if(races.length)setInitialDate();
 renderAll();
 </script>
