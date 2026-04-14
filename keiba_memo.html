@@ -275,8 +275,8 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
     </button>
     <div class="csv-panel" id="csvPanel">
       <label>CSVフォーマット</label>
-      <code>競馬場,日付,レース名,コース,時刻,馬番,馬名,騎手
-阪神,2026/04/12,阪神11R,芝1600m,15:40,1,馬名A,騎手A</code>
+      <code>競馬場,日付,レース名,コース,馬番,馬名,騎手
+阪神,2026/04/12,阪神11R,芝1600m,1,馬名A,騎手A</code>
       <textarea id="csvInput" placeholder="ここにCSVテキストを貼り付け..."></textarea>
       <div class="btn-row">
         <button class="btn btn-accent" onclick="importCsv()">追加で取り込む</button>
@@ -432,7 +432,7 @@ function parseCsv(text){
     const mk=dk+'__'+rn;
     if(!map[mk])map[mk]={id:'r'+Object.keys(map).length,name:rn,venue,dateKey:dk,
       course:idx('コース')>=0?c[idx('コース')]:'',
-      time:idx('時刻')>=0?c[idx('時刻')]:'',
+      time:'',
       status:'upcoming',horses:[]};
     map[mk].horses.push({
       num:idx('馬番')>=0?(parseInt(c[idx('馬番')])||map[mk].horses.length+1):map[mk].horses.length+1,
@@ -702,7 +702,7 @@ function renderRaceContent(){
               <div class="race-title">${r.name}</div>
               <div class="race-meta">
                 ${r.course?`<span class="r-meta">${r.course}</span>`:''}
-                ${r.time?`<span class="r-meta">発走 ${r.time}</span>`:''}
+
               </div>
               ${marksSumHtml}
               <div class="race-summary">
