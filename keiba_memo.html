@@ -430,7 +430,7 @@ function parseCsv(text){
     const dk=hasD&&idx('日付')>=0?normDate(c[idx('日付')]):todayKey();
     const venue=hasV&&idx('競馬場')>=0?c[idx('競馬場')]:gv(rn);
     const mk=dk+'__'+rn;
-    if(!map[mk])map[mk]={id:'r'+Object.keys(map).length,name:rn,venue,dateKey:dk,
+    if(!map[mk])map[mk]={id:(dk+'__'+venue+'__'+rn).replace(/[^a-zA-Z0-9_]/g,'_'),name:rn,venue,dateKey:dk,
       course:idx('コース')>=0?c[idx('コース')]:'',
       time:'',
       status:'upcoming',horses:[]};
