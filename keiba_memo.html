@@ -680,7 +680,7 @@ function renderRaceContent(){
                 </div>
                 ${cm?`<div class="memo-prev">📝 ${cm}</div>`:''}
               </div>
-              <button class="memo-btn ${cm?'has-memo':''}" onclick="event.stopPropagation();toggleMemo('${safeKey}')">${cm?'✏️メモ':'メモ＋'}</button>
+              <button class="memo-btn ${cm?'has-memo':''}" onclick="event.stopPropagation();toggleMemo('${r.id}','${h.num}')">${cm?'✏️メモ':'メモ＋'}</button>
             </div>
             <div class="memo-area ${isMemOpen?'open':''}" id="memo_${r.id}_${h.num}">
               ${histH}
@@ -733,15 +733,13 @@ function renderRaceContent(){
 }
 
 function toggleRace(id){expanded[id]=!expanded[id];renderRaceContent();}
-function toggleMemo(key){
+function toggleMemo(rid,num){
+  const key=rid+'__memo__'+num;
   memoOpen[key]=!memoOpen[key];
-  const parts=key.split('_');
-  const rid=parts[0],num=parts[1];
   const el=document.getElementById('memo_'+rid+'_'+num);
   if(el)el.classList.toggle('open',!!memoOpen[key]);
 }
-function insertPhrase(key,text){
-  const parts=key.split('_');const rid=parts[0],num=parts[1];
+function insertPhrase(rid,num,text){
   const ta=document.getElementById('ta_'+rid+'_'+num);
   if(!ta)return;ta.value=ta.value?ta.value+'　'+text:text;ta.focus();
 }
